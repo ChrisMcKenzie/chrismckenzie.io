@@ -1,0 +1,22 @@
+<header>
+  <div class="title">
+    {{ if isset .Params "logo" }}
+    <a href="/">
+      <img src="{{ .Params.logo}}" alt="">
+    </a>
+    {{ else }}
+    <a href="/" class="logo">
+      <img src="/assets/me.jpg" alt="">
+    </a>
+    {{ end }}
+    <div class="information">
+      {{ if (isset . "Title") and not isset .Params "logo" }}
+        {{ .Title }}
+      {{ else if isset .Params "logo"}}
+
+      {{ else }}
+        {{ .Site.Title }}
+      {{ end }}
+    </div>
+  </div>
+</header>
