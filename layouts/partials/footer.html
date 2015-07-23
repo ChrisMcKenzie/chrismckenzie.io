@@ -1,0 +1,56 @@
+<footer>
+  <div class="left">
+  {{ if isset .Site.Params "description_title" }}
+    <h5>{{ .Site.Params.description_title }}</h5>
+  {{ end }}
+  {{ if isset .Site.Params "description" }}
+  {{ .Site.Params.description | markdownify }}
+  {{ end }}
+  </div>
+  <div class="right">
+    <h5>Projects</h5>
+    <ul>
+    {{ range where .Site.Pages "Section" "projects" }}
+      <li>
+        {{ if isset .Params "link" }}
+          <a href="{{ .Params.link }}">
+            {{ .Title}}
+          </a>
+        {{ else }}
+          <a href="{{ .Permalink }}">
+            {{ .Title}}
+          </a>
+        {{ end }}
+        <small>{{ .Params.tagline }}</small>
+      </li>
+    {{ end }}
+    </ul>
+  </div>
+  <div class="foot">
+    {{ if isset .Site.Params "google_userid" }}
+    <a href="https://plus.google.com/{{ .Site.Params.google_userid }}">
+      <button class="google-plus"><i class="icon-google-plus"></i></button>
+    </a>
+    {{ end }}
+    {{ if isset .Site.Params "facebook_username" }}
+    <a href="https://www.facebook.com/{{ .Site.Params.facebook_username }}">
+      <button class="facebook"><i class="icon-facebook"></i></button>
+    </a>
+    {{ end }}
+    {{ if isset .Site.Params "twitter_username" }}
+    <a href="https://twitter.com/{{ .Site.Params.twitter_username }}">
+      <button class="twitter"><i class="icon-twitter"></i></button>
+    </a>
+    {{ end }}
+    {{ if isset .Site.Params "github_username" }}
+    <a href="https://github.com/{{ .Site.Params.github_username }}">
+      <button class="github"><i class="icon-github-alt"></i></button>
+    </a>
+    {{ end }}
+    <p class="rss-subscribe">subscribe <a href="{{ .RSSlink }}">via RSS</a></p>
+  </div>
+</footer>
+<script src="/assets/anchor.min.js"></script>
+<script>
+  addAnchors('h2');
+</script>
