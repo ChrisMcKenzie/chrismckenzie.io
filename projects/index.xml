@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Projects on Christopher McKenzie</title>
-    <link>http://chrismckenzie.io/projects/</link>
-    <description>Recent content in Projects on Christopher McKenzie</description>
+    <title>Projects on </title>
+    <link>/projects/</link>
+    <description>Recent content in Projects on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <atom:link href="http://chrismckenzie.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Daniel And Amanda Brewster</title>
-      <link>http://chrismckenzie.io/projects/daniel_mandy_brewster/</link>
+      <link>/projects/daniel_mandy_brewster/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://chrismckenzie.io/projects/daniel_mandy_brewster/</guid>
+      <guid>/projects/daniel_mandy_brewster/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Json Schema</title>
-      <link>http://chrismckenzie.io/projects/json_schema_validator/</link>
+      <link>/projects/json_schema_validator/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://chrismckenzie.io/projects/json_schema_validator/</guid>
+      <guid>/projects/json_schema_validator/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Splendid</title>
-      <link>http://chrismckenzie.io/projects/splendid/</link>
+      <link>/projects/splendid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://chrismckenzie.io/projects/splendid/</guid>
+      <guid>/projects/splendid/</guid>
       <description>&lt;p&gt;#About Splendid:
 Splendid is a text editor that is a fully pluggable and is built using web technologies and runs on the chrome app platform. Splendid uses open source tools and technologies such as.&lt;/p&gt;
 
