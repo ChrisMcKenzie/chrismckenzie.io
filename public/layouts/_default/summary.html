@@ -1,0 +1,8 @@
+<a href="{{ .Permalink }}">
+  <div class="hero" style="background-image:url({{ .Params.image }})">
+    <div class="title">
+      {{ .Title }}
+      <span>{{.Date.Format "Jan 2, 2006"}}</span>
+    </div>
+  </div>
+</a>
