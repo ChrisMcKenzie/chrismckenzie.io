@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>http://chrismckenzie.io/</loc>
     <lastmod>2015-07-24T23:16:34-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/recipes/breakfast_burrito/</loc>
+    <loc>http://chrismckenzie.io/recipes/breakfast_burrito/</loc>
     <lastmod>2015-07-24T23:16:34-07:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/deploying-with-golang/</loc>
+    <loc>http://chrismckenzie.io/post/deploying-with-golang/</loc>
     <lastmod>2015-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://localhost:1313/projects/daniel_mandy_brewster/</loc>
+    <loc>http://chrismckenzie.io/projects/daniel_mandy_brewster/</loc>
   </url>
   
   <url>
-    <loc>http://localhost:1313/projects/json_schema_validator/</loc>
+    <loc>http://chrismckenzie.io/projects/json_schema_validator/</loc>
   </url>
   
   <url>
-    <loc>http://localhost:1313/projects/splendid/</loc>
+    <loc>http://chrismckenzie.io/projects/splendid/</loc>
   </url>
   
 </urlset>
