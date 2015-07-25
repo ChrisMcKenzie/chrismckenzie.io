@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Christopher McKenzie</title>
+    <link>http://chrismckenzie.io/</link>
+    <description>Recent content on Christopher McKenzie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Feb 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://chrismckenzie.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Deploying with Go</title>
+      <link>http://chrismckenzie.io/post/deploying-with-golang/</link>
+      <pubDate>Mon, 23 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrismckenzie.io/post/deploying-with-golang/</guid>
+      <description>
+
+&lt;p&gt;Recently I have been building a lot of go applications, and I think I have
+come up with a good pattern for building an app that is ready for deployment
+to either a server or to users. This includes build/run for development, testing,
+dependency management, and packaging. While this process is still being actively developed I believe it is at a
+state in which to share.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;the-structure:a0974fb36f0145c5c94fcc544868149a&#34;&gt;The Structure&lt;/h2&gt;
+
+&lt;p&gt;I keep a very simple structure for my projects and it is as follows.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  |- my-project
+    |- bin/     # place to store binaries (in .gitignore)
+    |- dist/    # place to store packaged apps (in .gitignore)
+    |- pkg/     # for sub-packages
+    |- _vendor/ # our custom GOPATH (optional .gitignore)
+    |- Makefile
+    |- main.go
+    |- wercker.yml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;the-makefile:a0974fb36f0145c5c94fcc544868149a&#34;&gt;The Makefile&lt;/h2&gt;
+
+&lt;p&gt;The meat and potatoes of this workflow starts with the &lt;code&gt;Makefile&lt;/code&gt; for those
+who don&amp;rsquo;t know &lt;a href=&#34;http://en.wikipedia.org/wiki/Make_%28software%29&#34;&gt;&lt;code&gt;make&lt;/code&gt;&lt;/a&gt;
+is a build system. Make allows us to download dependencies, keep version,
+as well build and package.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-make&#34;&gt;.PHONY: version all run dist clean
+APP_NAME := my-project
+SHA := $(shell git rev-parse --short HEAD)
+BRANCH := $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
+VER := 0.0.1
+DIR=.
+
+ifdef WERCKER_OUTPUT_DIR 
+  DIR = $(WERCKER_OUTPUT_DIR)
+endif
+
+ifdef APP_SUFFIX
+  VERSION = $(VER)-$(subst /,-,$(APP_SUFFIX))
+else 
+  VERSION = $(VER)-$(BRANCH)
+endif
+
+BUILD := $(SHA)-$(BRANCH)
+
+# Go setup
+GO=go
+TEST=go test
+GOPATH := ${PWD}/_vendor:${GOPATH}
+export GOPATH
+
+DEPENDENCIES := github.com/gin-gonic/gin \
+                github.com/dancannon/gorethink
+
+# Sources and Targets
+EXECUTABLES :=bin/$(APP_NAME)
+# Build Binaries setting main.version and main.build vars
+LDFLAGS :=-ldflags &amp;quot;-X main.version $(VERSION) -X main.build $(BUILD)&amp;quot;
+# Package target
+PACKAGE :=$(DIR)/dist/$(APP_NAME)-$(VERSION).tar.gz
+
+# Custom go path for project
+VENDOR_DIR :=_vendor/src
+DEPENDENCIES_DIR := $(addprefix $(VENDOR_DIR),$(DEPENDENCIES))
+
+.DEFAULT: all
+
+all: | $(EXECUTABLES)
+
+# print the version
+version:
+  @echo $(VERSION)
+# print the name of the app
+name:
+  @echo $(APP_NAME)
+
+# print the package path
+package:
+  @echo $(PACKAGE)
+
+# We have to set GOPATH to just the _vendor
+# directory to ensure that `go get` doesn&#39;t
+# update packages in our primary GOPATH instead.
+# This will happen if you already have the package
+# installed in GOPATH since `go get` will use
+# that existing location as the destination.
+$(DEPENDENCIES_DIR):
+  @echo Downloading $(@:$(VENDOR_DIR)%=%)...
+  @GOPATH=${PWD}/_vendor go get $(@:$(VENDOR_DIR)%=%)
+
+# This defines the req&#39;s for each binary
+# if you only have one then these can be placed under
+# $(EXECUTABLES): Target
+# you must define the main file for each binary that will
+# be placed in bin.
+# For Example:
+# -----------
+# binary #1
+# bin/$(APP_NAME): main.go pkg/* $(DEPENDENCIES_DIR)
+# binary #2
+# bin/my_other_bin: other.go pkg/* $(DEPENDENCIES_DIR)
+bin/$(APP_NAME): main.go $(DEPENDENCIES_DIR) 
+
+$(EXECUTABLES): 
+  $(GO) build $(LDFLAGS) -o $@ $&amp;lt;
+
+run: bin/$(APP_NAME)
+  bin/$(APP_NAME)
+
+test: 
+  $(TEST) -r -cover
+
+clean:
+  @echo Cleaning Workspace...
+  rm -dRf _vendor
+  rm -dRf bin
+  rm -dRf dist
+
+$(PACKAGE): all
+  @echo Packaging Binaries...
+  @mkdir -p tmp/$(APP_NAME)/bin
+  @cp -R bin/ tmp/$(APP_NAME)/
+  @mkdir -p $(DIR)/dist/
+  tar -cf $@ -C tmp $(APP_NAME);
+  @rm -rf tmp
+
+dist: $(PACKAGE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This gives us a small list of important commands:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;make&lt;/code&gt; will build all of the targets defined in EXECUTABLES&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;make test&lt;/code&gt; will run go test or whatever you set TEST to&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;make clean&lt;/code&gt; will remove dirs &lt;code&gt;bin&lt;/code&gt;, &lt;code&gt;_vendor&lt;/code&gt;, and &lt;code&gt;dist&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;make dist&lt;/code&gt; will package your app into a tarball in the &lt;code&gt;dist&lt;/code&gt; dir.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You may have also noticed a few things pertaining to versioning these
+are some cool tricks to make versioning awesome and easy when releasing
+your app into the wild.&lt;/p&gt;
+
+&lt;p&gt;The first is the &lt;code&gt;VERSION&lt;/code&gt; variable, it is composed of two parts the
+&lt;a href=&#34;http://semver.org/&#34;&gt;semver&lt;/a&gt;, a tag (&lt;code&gt;beta&lt;/code&gt;, &lt;code&gt;rc&lt;/code&gt;, etc) or the branch name.
+The second part is the &lt;code&gt;BUILD&lt;/code&gt; variable, it is composed of two parts the
+commit sha, and the branch it was built from.&lt;/p&gt;
+
+&lt;p&gt;This all comes together in the &lt;code&gt;LDFLAGS&lt;/code&gt; variable which will set two
+corresponding variables in the &lt;code&gt;main&lt;/code&gt; package of your code which you
+could then use to populate a cli message among other things. The power of
+this is that we can keep our versioning in one place and it will affect
+all other parts of our project. You will see more of this in the next part.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-wercker-yml:a0974fb36f0145c5c94fcc544868149a&#34;&gt;The wercker.yml&lt;/h2&gt;
+
+&lt;p&gt;For those who do not know what &lt;a href=&#34;http://wercker.com/&#34;&gt;wercker&lt;/a&gt; is, I urge you
+to check it out, it&amp;rsquo;s currently my favorite CI/CD tool and it&amp;rsquo;s free while they
+are in beta. I use wercker as my platform for testing my code and more
+importantly building/releasing my code. In order to use wercker you must first
+setup your repo in wercker, then you must add a &lt;code&gt;wercker.yml&lt;/code&gt; file to your repo.
+Wercker gives us two flows, a Build Flow and a Deploy Flow and they do exactly
+that.&lt;/p&gt;
+
+&lt;p&gt;My wercker configuration takes advantage of a lot of werckers features namely
+the Custom deploy targets and Pipeline variables. this allows me to create deploy
+targets for both &lt;em&gt;final&lt;/em&gt; releases and &lt;em&gt;release candidates&lt;/em&gt;. My &amp;ldquo;deployments&amp;rdquo;
+are in the form of &lt;a href=&#34;https://github.com/blog/1547-release-your-software&#34;&gt;Github Releases&lt;/a&gt;
+and recieve a tag of the version, and the packaged binaries.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;box: wercker/golang@1.2.3
+
+deploy:
+    steps:
+        # Sets the go workspace and places your package
+        # at the right place in the workspace tree
+        - setup-go-workspace
+        - script: 
+            name: Build App
+            code: make dist
+        - script:
+            name: Make Exports
+            code: | 
+                export APP_VERSION=$(make version)
+                export PACKAGE_PATH=$(make package)
+        - github-create-release:
+            token: $GITHUB_TOKEN
+            tag: v$APP_VERSION
+            prerelease: $PRE_RELEASE
+            title: Version $APP_VERSION
+        - github-upload-asset:
+            token: $GITHUB_TOKEN
+            file: $PACKAGE_PATH
+            release_id: $WERCKER_GITHUB_CREATE_RELEASE_ID
+
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    # Sets the go workspace and places your package
+    # at the right place in the workspace tree
+    - setup-go-workspace
+    - script:
+        name: Unit Test
+        code: |
+            make test
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This file will instruct wercker to first run tests on your project and then
+once completed you may run a &amp;ldquo;deploy&amp;rdquo; on your test that will package up your
+app and then ship the tarball off to github release with git tags on the
+given commit. There are however a few steps needed to make this work, you
+must first create a deploy target in wercker by going to your project and
+clicking &lt;code&gt;settings&lt;/code&gt; -&amp;gt; &lt;code&gt;deploy targets&lt;/code&gt; and adding a new &amp;ldquo;Custom Deploy&amp;rdquo;
+target you may then choose a name such as &amp;ldquo;release&amp;rdquo; and select whether you
+wish to auto-deploy a specific branch. Next you must add two pipeline variables
+an &lt;code&gt;APP_SUFFIX&lt;/code&gt; which will contain the identifier for this release (eq: &lt;code&gt;beta&lt;/code&gt;),
+and a &lt;code&gt;PRE_RELEASE&lt;/code&gt; variable which can be &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; and will flag the
+release in github as a pre-release, and thats it you should be able to fire off
+a build and release it directly to your repos github releases.&lt;/p&gt;
+
+&lt;h2 id=&#34;final-thoughts:a0974fb36f0145c5c94fcc544868149a&#34;&gt;Final Thoughts&lt;/h2&gt;
+
+&lt;p&gt;With the given &lt;code&gt;Makefile&lt;/code&gt;, &lt;code&gt;wercker.yml&lt;/code&gt;, and filesystem structure I have been
+able to quickly and easily bootstrap applications with CI/CD as well as a
+nice way to manage dependencies that works everywhere. I hope this is a useful
+resource and I will continue to update this process with new additions as I
+find them.&lt;/p&gt;
+
+&lt;h2 id=&#34;links:a0974fb36f0145c5c94fcc544868149a&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://wercker.com&#34;&gt;Wercker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ChrisMcKenzie/Deploy-With-Golang-Demo&#34;&gt;Demo Project&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Daniel And Amanda Brewster</title>
+      <link>http://chrismckenzie.io/projects/daniel_mandy_brewster/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrismckenzie.io/projects/daniel_mandy_brewster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Json Schema</title>
+      <link>http://chrismckenzie.io/projects/json_schema_validator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrismckenzie.io/projects/json_schema_validator/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Splendid</title>
+      <link>http://chrismckenzie.io/projects/splendid/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrismckenzie.io/projects/splendid/</guid>
+      <description>&lt;p&gt;#About Splendid:
+Splendid is a text editor that is a fully pluggable and is built using web technologies and runs on the chrome app platform. Splendid uses open source tools and technologies such as.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://yeoman.io&#34;&gt;Yeoman&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://angularjs.org/&#34;&gt;AngularJS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://getuikit.com/&#34;&gt;UIKit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/main_screenshot.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/sidebar_screenshot.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/settings_screenshot.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;#To Install:
+  1. Clone this repo &lt;code&gt;git clone https://github.com/ChrisMcKenzie/Splendid&lt;/code&gt;
+  2. you will need bower to download the dependencies you can install by entering &lt;code&gt;npm install -g bower&lt;/code&gt; in you terminal
+  3. run &lt;code&gt;bower install&lt;/code&gt; in the root of the repo.
+  2. Open Chrome and go to Settings -&amp;gt; Extensions
+  3. enable developer mode
+  4. Click load unpacked extension and go to the cloned repo and open the &lt;code&gt;/app&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;p&gt;#Wanna Help Out?
+  To get Started build Splendid you will need &lt;a href=&#34;http://yeoman.io&#34;&gt;Yeoman&lt;/a&gt; installed you can install this by entering &lt;code&gt;npm install -g yo&lt;/code&gt;. Next fork the Splendid repo and clone, you can then install it in chrome by following the above steps.&lt;/p&gt;
+
+&lt;p&gt;After the setup is pretty much done in order to debug run &lt;code&gt;grunt debug&lt;/code&gt; in your terminal which will setup the livereload server and get things rolling.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
