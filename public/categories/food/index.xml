@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Food on Christopher McKenzie</title>
-    <link>http://localhost:1313/categories/food/</link>
+    <link>http://chrismckenzie.io/categories/food/</link>
     <description>Recent content in Food on Christopher McKenzie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 24 Jul 2015 23:16:34 -0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/food/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://chrismckenzie.io/categories/food/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Breakfast Burrito</title>
-      <link>http://localhost:1313/recipes/breakfast_burrito/</link>
+      <link>http://chrismckenzie.io/recipes/breakfast_burrito/</link>
       <pubDate>Fri, 24 Jul 2015 23:16:34 -0700</pubDate>
       
-      <guid>http://localhost:1313/recipes/breakfast_burrito/</guid>
+      <guid>http://chrismckenzie.io/recipes/breakfast_burrito/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;This recipe serves 8&lt;/em&gt;&lt;/p&gt;

@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Christopher McKenzie</title>
-    <link>http://localhost:1313/</link>
+    <link>http://chrismckenzie.io/</link>
     <description>Recent content on Christopher McKenzie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 24 Jul 2015 23:16:34 -0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://chrismckenzie.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Breakfast Burrito</title>
-      <link>http://localhost:1313/recipes/breakfast_burrito/</link>
+      <link>http://chrismckenzie.io/recipes/breakfast_burrito/</link>
       <pubDate>Fri, 24 Jul 2015 23:16:34 -0700</pubDate>
       
-      <guid>http://localhost:1313/recipes/breakfast_burrito/</guid>
+      <guid>http://chrismckenzie.io/recipes/breakfast_burrito/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;This recipe serves 8&lt;/em&gt;&lt;/p&gt;
@@ -42,10 +42,10 @@
     
     <item>
       <title>Deploying with Go</title>
-      <link>http://localhost:1313/post/deploying-with-golang/</link>
+      <link>http://chrismckenzie.io/post/deploying-with-golang/</link>
       <pubDate>Mon, 23 Feb 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/post/deploying-with-golang/</guid>
+      <guid>http://chrismckenzie.io/post/deploying-with-golang/</guid>
       <description>
 
 &lt;p&gt;Recently I have been building a lot of go applications, and I think I have
@@ -291,28 +291,28 @@ find them.&lt;/p&gt;
     
     <item>
       <title>Daniel And Amanda Brewster</title>
-      <link>http://localhost:1313/projects/daniel_mandy_brewster/</link>
+      <link>http://chrismckenzie.io/projects/daniel_mandy_brewster/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/projects/daniel_mandy_brewster/</guid>
+      <guid>http://chrismckenzie.io/projects/daniel_mandy_brewster/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Json Schema</title>
-      <link>http://localhost:1313/projects/json_schema_validator/</link>
+      <link>http://chrismckenzie.io/projects/json_schema_validator/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/projects/json_schema_validator/</guid>
+      <guid>http://chrismckenzie.io/projects/json_schema_validator/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Splendid</title>
-      <link>http://localhost:1313/projects/splendid/</link>
+      <link>http://chrismckenzie.io/projects/splendid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/projects/splendid/</guid>
+      <guid>http://chrismckenzie.io/projects/splendid/</guid>
       <description>&lt;p&gt;#About Splendid:
 Splendid is a text editor that is a fully pluggable and is built using web technologies and runs on the chrome app platform. Splendid uses open source tools and technologies such as.&lt;/p&gt;
 
