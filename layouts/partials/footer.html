@@ -4,14 +4,14 @@
     <h5>{{ .Site.Params.description_title }}</h5>
   {{ end }}
   {{ if isset .Site.Params "description" }}
-  {{ .Site.Params.description | markdownify }}
+    {{ .Site.Params.description | markdownify }}
   {{ end }}
   </div>
   <div class="right">
     <h5>Projects</h5>
     <ul>
     {{ range where .Site.Pages "Section" "projects" }}
-      <li>
+      <li {{if isset .Params "color"}}style="color: {{.Params.color}};" {{end}}>
         {{ if isset .Params "link" }}
           <a href="{{ .Params.link }}">
             {{ .Title}}
