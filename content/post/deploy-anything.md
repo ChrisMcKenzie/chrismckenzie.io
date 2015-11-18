@@ -11,7 +11,7 @@ image: http://share.chrismckenzie.io/49be1f4a.gif
 
 So it has been a while since I last touched on the problem of deploying software 
 to a server, with that being said I have had a chance to really dig in and 
-find a solution that is flexible and as well as simple for developers to setup.
+find a solution that is flexible as well as simple for developers to setup.
 
 ## The Idea
 
