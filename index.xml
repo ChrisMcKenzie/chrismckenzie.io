@@ -6,8 +6,111 @@
     <description>Recent content on Christopher McKenzie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Jul 2015 23:16:34 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 18 Nov 2015 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://chrismckenzie.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Deploying Anything with Dropship</title>
+      <link>http://chrismckenzie.io/post/deploy-anything/</link>
+      <pubDate>Wed, 18 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrismckenzie.io/post/deploy-anything/</guid>
+      <description>
+
+&lt;p&gt;So it has been a while since I last touched on the problem of deploying your
+software to a software, with that being said I have had a chance to really dig
+in and find a solution that is flexible and as well as simple for developers to
+setup.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-idea:3ae59ed0110a5ce15e1fb1835d25a734&#34;&gt;The Idea&lt;/h2&gt;
+
+&lt;p&gt;So when I started down this path of finding a clean deployment flow for my
+company (&lt;a href=&#34;http://thecontrolgroup.com&#34;&gt;The Control Group&lt;/a&gt;) I had a few requirements It had to work for all of
+the different types of applications and languages that we build; I also did not
+want to use web hooks they are just too clunky and you have to have a server that
+is accesible on the internet so it can be called (not really a fan); The last thing
+that I wanted to be able to do is to deploy multiple versions of an application.&lt;/p&gt;
+
+&lt;h2 id=&#34;artifacts:3ae59ed0110a5ce15e1fb1835d25a734&#34;&gt;Artifacts&lt;/h2&gt;
+
+&lt;p&gt;Another part of this system is the need for storing build artifacts in our case
+tarballs containing all of the files need to run the system. for this I chose
+rackspace &lt;a href=&#34;http://www.rackspace.com/cloud/files&#34;&gt;Cloud Files&lt;/a&gt;, but Amazons &lt;a href=&#34;https://aws.amazon.com/s3/&#34;&gt;S3&lt;/a&gt; would work just as well. it simply needs
+to store our build artifacts for later downloading on to our server.&lt;/p&gt;
+
+&lt;h2 id=&#34;i-built-a-tool:3ae59ed0110a5ce15e1fb1835d25a734&#34;&gt;I built a tool!!!&lt;/h2&gt;
+
+&lt;p&gt;So now for the shameless plug! At first I implemented this system with a pretty
+unwieldy bash script, and quickly realized if anyone else is going to use this
+it needs to be simple to setup. With that I introduce &lt;a href=&#34;https://github.com/chrismckenzie/dropship&#34;&gt;Dropship&lt;/a&gt;! Dropship is
+a tool that is installed on your servers along with a simple configuration file
+telling it where to get your artifact and how to install it as well being able
+to sequentially update multiple servers.&lt;/p&gt;
+
+&lt;p&gt;Dropship uses md5sums to check freshness of your artifact comparing the one that
+is installed with the sum of file on the artifact repo, it will then repeat this
+process on the configured interval and if the sums do not match it will then start
+the update process (pretty simple eh).&lt;/p&gt;
+
+&lt;p&gt;A &lt;a href=&#34;https://github.com/chrismckenzie/dropship&#34;&gt;Dropship&lt;/a&gt; config is and HCL file like the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# vim: set ft=hcl :
+service &amp;quot;my-service&amp;quot; {
+  # Use a semaphore to update one machine at a time
+  sequentialUpdates = true
+
+  # Check for updates every 10s
+  checkInterval = &amp;quot;10s&amp;quot;
+
+  # Run this command before update starts
+  before &amp;quot;script&amp;quot; {
+    command = &amp;quot;initctl my-service stop&amp;quot;
+  }
+
+  # Artifact defines what repository to use (rackspace) and where 
+  # your artifact live on that repository
+  artifact &amp;quot;s3&amp;quot; {
+    bucket = &amp;quot;my-s3bucket&amp;quot;
+    path = &amp;quot;my-service.tar.gz&amp;quot;
+    destination = &amp;quot;./test/dest&amp;quot;
+  }
+
+  # After successful update send an event to graphite
+  # this allows you to show deploy annotations in tools like grafana
+  # 
+  # The graphite hook will automatically add this services name into the 
+  # graphite tags. You also have access to all of the services meta data
+  # like Name, &amp;quot;current hash&amp;quot;, hostname.
+  after &amp;quot;graphite-event&amp;quot; {
+    host = &amp;quot;http://&amp;lt;my-graphite-server&amp;gt;&amp;quot;
+    tags = &amp;quot;deployment&amp;quot;
+    what = &amp;quot;deployed to {{.Name}} on {{.Hostname}}&amp;quot;
+    data = &amp;quot;{{.Hash}}&amp;quot;
+  }
+
+  # Run this command after the update finishes
+  after &amp;quot;script&amp;quot; {
+    command = &amp;quot;initctl my-service start&amp;quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you can see there are a bunch of options available for installing your system,
+you can set hooks that will be called &lt;code&gt;before&lt;/code&gt; and &lt;code&gt;after&lt;/code&gt; your artifact is installed.&lt;/p&gt;
+
+&lt;p&gt;Hooks are a very interesting feature and I have implemented a few helpful hooks
+to start with but hope to add many more. One hook worth mentioning is the
+&lt;code&gt;graphite-event&lt;/code&gt; hook this will create an event in graphite which can be viewed as
+a pretty annotation on your graphs in grafana for example, you can then see how
+your latest deployment affected your stats.&lt;/p&gt;
+
+&lt;p&gt;Currently this is available as a Debian package and can be installed by following
+the guide &lt;a href=&#34;https://github.com/ChrisMcKenzie/dropship#installation&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Please let me know what you think of this project in the comments. And feel free
+to file issues and feature requests &lt;a href=&#34;https://github.com/ChrisMcKenzie/dropship/issues&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Breakfast Burrito</title>
@@ -299,20 +402,20 @@ find them.&lt;/p&gt;
     </item>
     
     <item>
-      <title>Json Schema</title>
-      <link>http://chrismckenzie.io/projects/json_schema_validator/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrismckenzie.io/projects/json_schema_validator/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Dropship</title>
       <link>http://chrismckenzie.io/projects/dropship/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://chrismckenzie.io/projects/dropship/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Json Schema</title>
+      <link>http://chrismckenzie.io/projects/json_schema_validator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrismckenzie.io/projects/json_schema_validator/</guid>
       <description></description>
     </item>
     
