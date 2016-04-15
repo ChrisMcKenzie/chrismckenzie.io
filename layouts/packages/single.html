@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{$title := lower .Title}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="go-import" content="chrismckenzie.io/{{$title}} git {{.Params.repo}}">
+    <meta name="go-source" content="chrismckenzie.io/{{$title}} {{.Params.repo}} {{.Params.repo}}/tree/master{/dir} {{.Params.repo}}/blob/master{/dir}/{file}#L{line}">
+    <meta http-equiv="refresh" content="0; url=https://godoc.org/chrismckenzie.io/{{$title}}">
+  </head>
+  <body>
+    Nothing to see here; <a href="https://godoc.org/chrismckenzie.io/{{$title}}">move along</a>.
+  </body>
+</html>

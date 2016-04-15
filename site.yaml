@@ -9,6 +9,7 @@ newContentEditor: vim
 publishdir: "public"
 permalinks:
   blog: /:year/:month/:day/:title/
+  packages: /:title
 pygmentsStyle: "monokai"
 disqusShortname: "chrismckenzieio"
 watch: true
