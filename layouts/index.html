@@ -7,9 +7,20 @@
 
     {{ partial "header.html" . }}
 
+    <div class="sub-content">
     {{ range where .Site.Pages "Section" "posts" }}
       {{ .Render "summary" }}
     {{ end }}
+    </div>
+
+    <div class="sub-content">
+      <h2>Hobbies</h2>
+      <div class="highlights">
+      {{ range where .Site.Pages "Section" "aircraft" }}
+      <div class="block">{{ .Render "summary" }}</div>
+      {{ end }}
+      </div>
+    </div>
 
     {{ partial "footer.html" . }}
 

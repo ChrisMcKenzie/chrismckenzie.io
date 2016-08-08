@@ -182,6 +182,8 @@ ul { margin-bottom: 20px; }
 }
 
 
+
+
 /*=========={ BUTTONS }==========*/
 button, a.btn { display: inline-block; border: 0; outline: 0; margin: 0; padding: 15px; height: 44px; background: #ff6644; color: #fff; font: 14px/14px 'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: bold; text-transform: uppercase; cursor: pointer; text-shadow: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */ -moz-box-sizing: border-box; /* Firefox, other Gecko */ box-sizing: border-box; /* Opera/IE 8+ */ -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
 
@@ -257,6 +259,51 @@ section { display: block; position: relative; background: #fff; padding: 40px 50
 .post-header img { width: 100px; margin: 0 auto; }
 
 .post-image img, .post-video video { width: 100%; -webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px; border-top-left-radius: 3px; border-top-right-radius: 3px; }
+
+.sub-content {
+  position: relative;
+  background-size: cover;
+  width: auto;
+  max-width: 880px;
+  margin: 0 auto;
+  margin-top: 20px;
+
+  border-bottom: 1px solid #e2e0da;
+  padding-bottom: 10px;
+}
+
+.sub-content h2 {
+  margin-left: 20px;
+}
+
+.highlights {
+  display: -ms-flexbox;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-flow: row wrap; 
+  flex-flow: row wrap; 
+  display: -webkit-box;
+  display: flex;
+
+  position: relative;
+  background-size: cover;
+  width: auto;
+  height: 250px;
+  max-width: 880px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.highlights .block {
+  position: relative;
+  -webkit-box-flex: auto;
+  -ms-flex: auto;
+  flex: auto; 
+  margin: 10px;
+  width: 200px;
+}
 
 .hero { display: block; position: relative; background: #fff; background-size: cover; padding: 0; width: auto; height: 250px; max-width: 860px; margin: 0 auto; margin-bottom: 20px; border-radius: 5px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */ -moz-box-sizing: border-box; /* Firefox, other Gecko */ box-sizing: border-box; /* Opera/IE 8+ */ }
 
