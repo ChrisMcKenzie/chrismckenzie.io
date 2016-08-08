@@ -14,7 +14,9 @@
       <nav>
         <ul>
         {{ range .Site.Menus.main }}
+        {{if ne .Name "Projects"}}
         <li><a class="sidebar-nav-item" href="{{.URL}}">{{ .Name }}</a></li>
+        {{end}}
         {{ end }}
         </ul>
       </nav>
