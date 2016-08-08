@@ -147,6 +147,41 @@ ul { margin-bottom: 20px; }
 
 .content h5 { font-size: 12px; }
 
+.content .images {
+  margin-bottom: 20px;
+  display: -ms-flexbox;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-flow: row wrap; 
+  flex-flow: row wrap; 
+  display: -webkit-box;
+  display: flex;
+}
+
+.content .images div {
+  -webkit-box-flex: auto;
+  -ms-flex: auto;
+  flex: auto; 
+  padding: 10px;
+  box-sizing: border-box;
+  width: 200px;
+}
+
+.content .images img {
+  height: auto;
+  /* flex: 1; */
+  width: 100%; 
+  height: auto;
+}
+
+.content .images div.primary {
+  width: 100%;
+  height: 300px;
+}
+
+
 /*=========={ BUTTONS }==========*/
 button, a.btn { display: inline-block; border: 0; outline: 0; margin: 0; padding: 15px; height: 44px; background: #ff6644; color: #fff; font: 14px/14px 'Open Sans', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: bold; text-transform: uppercase; cursor: pointer; text-shadow: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */ -moz-box-sizing: border-box; /* Firefox, other Gecko */ box-sizing: border-box; /* Opera/IE 8+ */ -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
 
@@ -168,7 +203,7 @@ background: linear-gradient(transparent 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0.1) 50%
 -moz-background-size: 100% 100%;
 background-size: 100% 100%;*/ text-align: center; -webkit-transition: height .3s, top .3s; -moz-transition: height .3s, top .3s; transition: height .3s, top .3s; z-index: -2; }
 
-header .title { left: 50%; margin: 50px auto; z-index: 12; }
+header .title { left: 50%; margin: 50px auto 0px; z-index: 12; }
 
 header .overlay { position: fixed; top: 0; left: 0; height: 0; width: 100%; background: rgba(0, 0, 0, 0.5); z-index: 11; -webkit-transition: height 0.3s; -moz-transition: height 0.3s; transition: height 0.3s; }
 
@@ -206,7 +241,7 @@ header nav ul { margin: 35px 25px 0px 0px; }
 
 header nav ul li { display: inline-block; margin-left: 20px; }
 
-header nav ul li a, header nav ul li a:visited { font-size: 1em; font-weight: 300; text-decoration: underline; color: #000; text-transform: uppercase; cursor: pointer; position: relative; top: -5px; }
+header nav ul li a, header nav ul li a:visited { font-size: .5em; font-weight: 300; color: #000; text-transform: uppercase; cursor: pointer; position: relative; top: -5px; }
 
 header nav ul li a:hover { color: #F64; -webkit-transition: color .25s ease-in-out; -moz-transition: color .25s ease-in-out; -o-transition: color .25s ease-in-out; transition: color .25s ease-in-out; border: 0; }
 

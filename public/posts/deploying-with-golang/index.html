@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Deploying with Go</title>
+    <meta name="description" content="">
+
+    <link rel="canonical" href="http://chrismckenzie.io/posts/deploying-with-golang/">
+    <link href="" rel="alternate" type="application/rss+xml" title="Christopher McKenzie" />
+
+    
+    <link rel="stylesheet" href="http://chrismckenzie.io/css/main.css">
+    <link rel="stylesheet" href="http://chrismckenzie.io/css/font-awesome.css">
+
+</head>
+
+
+  <body>
+
+    <header>
+  <div class="title">
+    
+    <a href="http://chrismckenzie.io/" class="logo">
+      <img src="http://chrismckenzie.io/assets/me.jpg" alt="">
+    </a>
+    
+
+    <div class="information">
+      <nav>
+        <ul>
+        
+        <li><a class="sidebar-nav-item" href="http://chrismckenzie.io/aircraft/">Aircraft</a></li>
+        
+        <li><a class="sidebar-nav-item" href="http://chrismckenzie.io/posts/">Posts</a></li>
+        
+        <li><a class="sidebar-nav-item" href="http://chrismckenzie.io/projects/">Projects</a></li>
+        
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+
+    
+      <div class="post-image" style="background-image: url(/assets/golang.jpg)">
+    
+    </div>
+    <section class="post">
+      <div>
+        <div class="title">
+          <a href="http://chrismckenzie.io/posts/deploying-with-golang/">Deploying with Go</a>
+          <span class="date">Feb 23, 2015</span>
+        </div>
+
+        <div class="hashtags">
+          
+            <a class="hashtag">Golang</a>
+          
+            <a class="hashtag">Deployment</a>
+          
+            <a class="hashtag">Development</a>
+          
+            <a class="hashtag">Makefile</a>
+          
+            <a class="hashtag">Wercker</a>
+          
+        </div>
+      </div>
+      <div class="content">
+        
+
+<p>Recently I have been building a lot of go applications, and I think I have
+come up with a good pattern for building an app that is ready for deployment
+to either a server or to users. This includes build/run for development, testing,
+dependency management, and packaging. While this process is still being actively developed I believe it is at a
+state in which to share.</p>
+
+<!-- more -->
+
+<h2 id="the-structure">The Structure</h2>
+
+<p>I keep a very simple structure for my projects and it is as follows.</p>
+
+<pre><code>  |- my-project
+    |- bin/     # place to store binaries (in .gitignore)
+    |- dist/    # place to store packaged apps (in .gitignore)
+    |- pkg/     # for sub-packages
+    |- _vendor/ # our custom GOPATH (optional .gitignore)
+    |- Makefile
+    |- main.go
+    |- wercker.yml
+</code></pre>
+
+<h2 id="the-makefile">The Makefile</h2>
+
+<p>The meat and potatoes of this workflow starts with the <code>Makefile</code> for those
+who don&rsquo;t know <a href="http://en.wikipedia.org/wiki/Make_%28software%29"><code>make</code></a>
+is a build system. Make allows us to download dependencies, keep version,
+as well build and package.</p>
+
+<pre><code class="language-make">.PHONY: version all run dist clean
+APP_NAME := my-project
+SHA := $(shell git rev-parse --short HEAD)
+BRANCH := $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
+VER := 0.0.1
+DIR=.
+
+ifdef WERCKER_OUTPUT_DIR 
+  DIR = $(WERCKER_OUTPUT_DIR)
+endif
+
+ifdef APP_SUFFIX
+  VERSION = $(VER)-$(subst /,-,$(APP_SUFFIX))
+else 
+  VERSION = $(VER)-$(BRANCH)
+endif
+
+BUILD := $(SHA)-$(BRANCH)
+
+# Go setup
+GO=go
+TEST=go test
+GOPATH := ${PWD}/_vendor:${GOPATH}
+export GOPATH
+
+DEPENDENCIES := github.com/gin-gonic/gin \
+                github.com/dancannon/gorethink
+
+# Sources and Targets
+EXECUTABLES :=bin/$(APP_NAME)
+# Build Binaries setting main.version and main.build vars
+LDFLAGS :=-ldflags &quot;-X main.version $(VERSION) -X main.build $(BUILD)&quot;
+# Package target
+PACKAGE :=$(DIR)/dist/$(APP_NAME)-$(VERSION).tar.gz
+
+# Custom go path for project
+VENDOR_DIR :=_vendor/src
+DEPENDENCIES_DIR := $(addprefix $(VENDOR_DIR),$(DEPENDENCIES))
+
+.DEFAULT: all
+
+all: | $(EXECUTABLES)
+
+# print the version
+version:
+  @echo $(VERSION)
+# print the name of the app
+name:
+  @echo $(APP_NAME)
+
+# print the package path
+package:
+  @echo $(PACKAGE)
+
+# We have to set GOPATH to just the _vendor
+# directory to ensure that `go get` doesn't
+# update packages in our primary GOPATH instead.
+# This will happen if you already have the package
+# installed in GOPATH since `go get` will use
+# that existing location as the destination.
+$(DEPENDENCIES_DIR):
+  @echo Downloading $(@:$(VENDOR_DIR)%=%)...
+  @GOPATH=${PWD}/_vendor go get $(@:$(VENDOR_DIR)%=%)
+
+# This defines the req's for each binary
+# if you only have one then these can be placed under
+# $(EXECUTABLES): Target
+# you must define the main file for each binary that will
+# be placed in bin.
+# For Example:
+# -----------
+# binary #1
+# bin/$(APP_NAME): main.go pkg/* $(DEPENDENCIES_DIR)
+# binary #2
+# bin/my_other_bin: other.go pkg/* $(DEPENDENCIES_DIR)
+bin/$(APP_NAME): main.go $(DEPENDENCIES_DIR) 
+
+$(EXECUTABLES): 
+  $(GO) build $(LDFLAGS) -o $@ $&lt;
+
+run: bin/$(APP_NAME)
+  bin/$(APP_NAME)
+
+test: 
+  $(TEST) -r -cover
+
+clean:
+  @echo Cleaning Workspace...
+  rm -dRf _vendor
+  rm -dRf bin
+  rm -dRf dist
+
+$(PACKAGE): all
+  @echo Packaging Binaries...
+  @mkdir -p tmp/$(APP_NAME)/bin
+  @cp -R bin/ tmp/$(APP_NAME)/
+  @mkdir -p $(DIR)/dist/
+  tar -cf $@ -C tmp $(APP_NAME);
+  @rm -rf tmp
+
+dist: $(PACKAGE)
+</code></pre>
+
+<p>This gives us a small list of important commands:</p>
+
+<ul>
+<li><code>make</code> will build all of the targets defined in EXECUTABLES</li>
+<li><code>make test</code> will run go test or whatever you set TEST to</li>
+<li><code>make clean</code> will remove dirs <code>bin</code>, <code>_vendor</code>, and <code>dist</code></li>
+<li><code>make dist</code> will package your app into a tarball in the <code>dist</code> dir.</li>
+</ul>
+
+<p>You may have also noticed a few things pertaining to versioning these
+are some cool tricks to make versioning awesome and easy when releasing
+your app into the wild.</p>
+
+<p>The first is the <code>VERSION</code> variable, it is composed of two parts the
+<a href="http://semver.org/">semver</a>, a tag (<code>beta</code>, <code>rc</code>, etc) or the branch name.
+The second part is the <code>BUILD</code> variable, it is composed of two parts the
+commit sha, and the branch it was built from.</p>
+
+<p>This all comes together in the <code>LDFLAGS</code> variable which will set two
+corresponding variables in the <code>main</code> package of your code which you
+could then use to populate a cli message among other things. The power of
+this is that we can keep our versioning in one place and it will affect
+all other parts of our project. You will see more of this in the next part.</p>
+
+<h2 id="the-wercker-yml">The wercker.yml</h2>
+
+<p>For those who do not know what <a href="http://wercker.com/">wercker</a> is, I urge you
+to check it out, it&rsquo;s currently my favorite CI/CD tool and it&rsquo;s free while they
+are in beta. I use wercker as my platform for testing my code and more
+importantly building/releasing my code. In order to use wercker you must first
+setup your repo in wercker, then you must add a <code>wercker.yml</code> file to your repo.
+Wercker gives us two flows, a Build Flow and a Deploy Flow and they do exactly
+that.</p>
+
+<p>My wercker configuration takes advantage of a lot of werckers features namely
+the Custom deploy targets and Pipeline variables. this allows me to create deploy
+targets for both <em>final</em> releases and <em>release candidates</em>. My &ldquo;deployments&rdquo;
+are in the form of <a href="https://github.com/blog/1547-release-your-software">Github Releases</a>
+and recieve a tag of the version, and the packaged binaries.</p>
+
+<pre><code class="language-yaml">box: wercker/golang@1.2.3
+
+deploy:
+    steps:
+        # Sets the go workspace and places your package
+        # at the right place in the workspace tree
+        - setup-go-workspace
+        - script: 
+            name: Build App
+            code: make dist
+        - script:
+            name: Make Exports
+            code: | 
+                export APP_VERSION=$(make version)
+                export PACKAGE_PATH=$(make package)
+        - github-create-release:
+            token: $GITHUB_TOKEN
+            tag: v$APP_VERSION
+            prerelease: $PRE_RELEASE
+            title: Version $APP_VERSION
+        - github-upload-asset:
+            token: $GITHUB_TOKEN
+            file: $PACKAGE_PATH
+            release_id: $WERCKER_GITHUB_CREATE_RELEASE_ID
+
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    # Sets the go workspace and places your package
+    # at the right place in the workspace tree
+    - setup-go-workspace
+    - script:
+        name: Unit Test
+        code: |
+            make test
+
+</code></pre>
+
+<p>This file will instruct wercker to first run tests on your project and then
+once completed you may run a &ldquo;deploy&rdquo; on your test that will package up your
+app and then ship the tarball off to github release with git tags on the
+given commit. There are however a few steps needed to make this work, you
+must first create a deploy target in wercker by going to your project and
+clicking <code>settings</code> -&gt; <code>deploy targets</code> and adding a new &ldquo;Custom Deploy&rdquo;
+target you may then choose a name such as &ldquo;release&rdquo; and select whether you
+wish to auto-deploy a specific branch. Next you must add two pipeline variables
+an <code>APP_SUFFIX</code> which will contain the identifier for this release (eq: <code>beta</code>),
+and a <code>PRE_RELEASE</code> variable which can be <code>true</code> or <code>false</code> and will flag the
+release in github as a pre-release, and thats it you should be able to fire off
+a build and release it directly to your repos github releases.</p>
+
+<h2 id="final-thoughts">Final Thoughts</h2>
+
+<p>With the given <code>Makefile</code>, <code>wercker.yml</code>, and filesystem structure I have been
+able to quickly and easily bootstrap applications with CI/CD as well as a
+nice way to manage dependencies that works everywhere. I hope this is a useful
+resource and I will continue to update this process with new additions as I
+find them.</p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+<li><a href="http://wercker.com">Wercker</a></li>
+<li><a href="https://github.com/ChrisMcKenzie/Deploy-With-Golang-Demo">Demo Project</a></li>
+</ul>
+
+      </div>
+      <div class="share-page">
+    Share this on &rarr; 
+    <a href="https://twitter.com/intent/tweet?text=check out this post on Deploying%20with%20Go&url=http%3a%2f%2fchrismckenzie.io%2fposts%2fdeploying-with-golang%2f&via=TopherMcK&related=TopherMcK" 
+       rel="nofollow" 
+       target="_blank" 
+       title="Share on Twitter">
+      <button class="twitter"><i class="icon-twitter"></i></button>
+    </a>
+    <a href="https://facebook.com/sharer.php?u=http%3a%2f%2fchrismckenzie.io%2fposts%2fdeploying-with-golang%2f" 
+       rel="nofollow" 
+       target="_blank" 
+       title="Share on Facebook">
+      <button class="facebook"><i class="icon-facebook"></i></button>
+    </a>
+    <a href="https://plus.google.com/share?url=http%3a%2f%2fchrismckenzie.io%2fposts%2fdeploying-with-golang%2f" 
+       rel="nofollow" 
+       target="_blank" 
+       title="Share on Google+">
+      <button class="google-plus"><i class="icon-google-plus"></i></button>
+    </a>
+</div>
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'chrismckenzieio';
+    var disqus_identifier = 'http:\/\/chrismckenzie.io\/posts\/deploying-with-golang\/';
+    var disqus_title = 'Deploying with Go';
+    var disqus_url = 'http:\/\/chrismckenzie.io\/posts\/deploying-with-golang\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </section>
+
+    <footer>
+  <div class="left">
+  
+    <h5>A little about me</h5>
+  
+  
+    My name is Christopher McKenzie,
+I am a Senior Software Engineer in Phelan, CA;
+  
+  </div>
+  <div class="right">
+    <h5>Projects</h5>
+    <ul>
+    
+      <li >
+        
+          <a href="http://mrandmrsbrewster.us">
+            Daniel And Amanda Brewster
+          </a>
+        
+        <small>Wedding website</small>
+      </li>
+    
+      <li style="color: #ff6644;" >
+        
+          <a href="http://github.com/chrismckenzie/dropship">
+            Dropship
+          </a>
+        
+        <small>Automated Deployment</small>
+      </li>
+    
+      <li >
+        
+          <a href="http://chrismckenzie.io/jsonv/">
+            Json Schema
+          </a>
+        
+        <small>validator</small>
+      </li>
+    
+      <li >
+        
+          <a href="http://chrismckenzie.io/projects/splendid/">
+            Splendid
+          </a>
+        
+        <small>a tasty code editor</small>
+      </li>
+    
+    </ul>
+  </div>
+  <div class="foot">
+    
+    <a href="https://plus.google.com/1.1299714882200366e&#43;20">
+      <button class="google-plus"><i class="icon-google-plus"></i></button>
+    </a>
+    
+    
+    <a href="https://www.facebook.com/cmckenzie13">
+      <button class="facebook"><i class="icon-facebook"></i></button>
+    </a>
+    
+    
+    <a href="https://twitter.com/TopherMcK">
+      <button class="twitter"><i class="icon-twitter"></i></button>
+    </a>
+    
+    
+    <a href="https://github.com/ChrisMcKenzie">
+      <button class="github"><i class="icon-github-alt"></i></button>
+    </a>
+    
+    <p class="rss-subscribe">subscribe <a href="">via RSS</a></p>
+  </div>
+</footer>
+<script src="http://chrismckenzie.io/assets/anchor.min.js"></script>
+<script>
+  addAnchors('h2');
+</script>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-54513795-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+  </body>
+
+</html>
