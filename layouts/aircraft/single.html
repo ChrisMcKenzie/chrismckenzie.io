@@ -7,9 +7,27 @@
 
     {{ partial "header.html" . }}
 
-    {{ range where .Site.Pages "Section" "posts" }}
-      {{ .Render "summary" }}
-    {{ end }}
+
+    <section class="post">
+      <div>
+        <div class="title">
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </div>
+      </div>
+      <div class="content">
+        <h2>Images</h2>
+        <div class="images">
+          {{range .Params.images}}
+          <div {{if eq .hero true}}class="primary"{{end}}><img  src="{{ .src }}"/></div>
+          {{end}}
+        </div>
+
+        {{ .Content }}
+      </div>
+
+      {{ partial "sharing.html" . }}
+      {{ template "_internal/disqus.html" . }}
+    </section>
 
     {{ partial "footer.html" . }}
 

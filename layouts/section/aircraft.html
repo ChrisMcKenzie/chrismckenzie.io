@@ -7,8 +7,10 @@
 
     {{ partial "header.html" . }}
 
-    {{ range where .Site.Pages "Section" "posts" }}
-      {{ .Render "summary" }}
+    {{ range .Data.Pages }}
+      {{ if in .Params.categories "aircraft" }}
+        {{ .Render "summary" }}
+      {{end}}
     {{ end }}
 
     {{ partial "footer.html" . }}

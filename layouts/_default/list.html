@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -7,7 +8,7 @@
 
     {{ partial "header.html" . }}
 
-    {{ range where .Site.Pages "Section" "posts" }}
+    {{ range .Data.Pages }}
       {{ .Render "summary" }}
     {{ end }}
 

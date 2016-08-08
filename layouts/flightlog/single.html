@@ -7,9 +7,23 @@
 
     {{ partial "header.html" . }}
 
-    {{ range where .Site.Pages "Section" "posts" }}
-      {{ .Render "summary" }}
+
+    {{ if isset .Params "image"}}
+      <div class="post-image" style="background-image: url({{ .Params.image}})">
     {{ end }}
+    </div>
+    <section class="post">
+      <div>
+        <div class="title">
+          <a href="{{ .Permalink }}">{{ .Params.title }}</a>
+        </div>
+      </div>
+      <div class="content">
+        {{ .Content }}
+      </div>
+      {{ partial "sharing.html" . }}
+      {{ template "_internal/disqus.html" . }}
+    </section>
 
     {{ partial "footer.html" . }}
 

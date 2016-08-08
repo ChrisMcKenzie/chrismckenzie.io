@@ -9,14 +9,15 @@
       <img src="/assets/me.jpg" alt="">
     </a>
     {{ end }}
-    <div class="information">
-      {{ if (isset . "Title") and not isset .Params "logo" }}
-        {{ .Title }}
-      {{ else if isset .Params "logo"}}
 
-      {{ else }}
-        {{ .Site.Title }}
-      {{ end }}
+    <div class="information">
+      <nav>
+        <ul>
+        {{ range .Site.Menus.main }}
+        <li><a class="sidebar-nav-item" href="{{.URL}}">{{ .Name }}</a></li>
+        {{ end }}
+        </ul>
+      </nav>
     </div>
   </div>
 </header>

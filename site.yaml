@@ -6,6 +6,7 @@ email: chris@keyboardsurfer.com
 languageCode: en-us
 metaDataFormat: yaml
 newContentEditor: vim
+SectionPagesMenu: "main"
 publishdir: "public"
 permalinks:
   blog: /:year/:month/:day/:title/
@@ -22,6 +23,5 @@ params:
   description_title: A little about me
   description: | 
     My name is Christopher McKenzie, 
-    I am a Web Application Developer In San Diego, Ca; 
-    I am currently employed at [The Control Group](http://thecontrolgroup.com).
+    I am a Senior Software Engineer in Phelan, CA;
 ---
