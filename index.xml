@@ -21,7 +21,7 @@
 to a server, with that being said I have had a chance to really dig in and
 find a solution that is flexible as well as simple for developers to setup.&lt;/p&gt;
 
-&lt;h2 id=&#34;the-idea:3ae59ed0110a5ce15e1fb1835d25a734&#34;&gt;The Idea&lt;/h2&gt;
+&lt;h2 id=&#34;the-idea&#34;&gt;The Idea&lt;/h2&gt;
 
 &lt;p&gt;So when I started down this path of finding a clean deployment flow for my
 company (&lt;a href=&#34;http://thecontrolgroup.com&#34;&gt;The Control Group&lt;/a&gt;) I had a few requirements It had to work for all of
@@ -30,14 +30,14 @@ want to use web hooks they are just too clunky and you have to have a server tha
 is accesible on the internet so it can be called (not really a fan); The last thing
 that I wanted to be able to do is to deploy multiple versions of an application.&lt;/p&gt;
 
-&lt;h2 id=&#34;artifacts:3ae59ed0110a5ce15e1fb1835d25a734&#34;&gt;Artifacts&lt;/h2&gt;
+&lt;h2 id=&#34;artifacts&#34;&gt;Artifacts&lt;/h2&gt;
 
 &lt;p&gt;Another part of this system is the need for storing build artifacts in our case
 tarballs containing all of the files need to run the system. for this I chose
 rackspace &lt;a href=&#34;http://www.rackspace.com/cloud/files&#34;&gt;Cloud Files&lt;/a&gt;, but Amazons &lt;a href=&#34;https://aws.amazon.com/s3/&#34;&gt;S3&lt;/a&gt; would work just as well. it simply needs
 to store our build artifacts for later downloading on to our server.&lt;/p&gt;
 
-&lt;h2 id=&#34;i-built-a-tool:3ae59ed0110a5ce15e1fb1835d25a734&#34;&gt;I built a tool!!!&lt;/h2&gt;
+&lt;h2 id=&#34;i-built-a-tool&#34;&gt;I built a tool!!!&lt;/h2&gt;
 
 &lt;p&gt;So now for the shameless plug! At first I implemented this system with a pretty
 unwieldy bash script, and quickly realized if anyone else is going to use this
@@ -121,7 +121,7 @@ to file issues and feature requests &lt;a href=&#34;https://github.com/ChrisMcKe
 
 &lt;p&gt;&lt;em&gt;This recipe serves 8&lt;/em&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;ingredients:3432fddb56e3551cb1492c792df5319a&#34;&gt;Ingredients&lt;/h2&gt;
+&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;2 lb   - Tillamook Medium Cheddar Cheese&lt;/li&gt;
@@ -132,7 +132,7 @@ to file issues and feature requests &lt;a href=&#34;https://github.com/ChrisMcKe
 &lt;li&gt;8      - XXL Flour Tortillas&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;instructions:3432fddb56e3551cb1492c792df5319a&#34;&gt;Instructions&lt;/h2&gt;
+&lt;h2 id=&#34;instructions&#34;&gt;Instructions&lt;/h2&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Cook Sausage, Bacon, and Eggs seperately&lt;/li&gt;
@@ -158,7 +158,7 @@ state in which to share.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
-&lt;h2 id=&#34;the-structure:a0974fb36f0145c5c94fcc544868149a&#34;&gt;The Structure&lt;/h2&gt;
+&lt;h2 id=&#34;the-structure&#34;&gt;The Structure&lt;/h2&gt;
 
 &lt;p&gt;I keep a very simple structure for my projects and it is as follows.&lt;/p&gt;
 
@@ -172,7 +172,7 @@ state in which to share.&lt;/p&gt;
     |- wercker.yml
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;the-makefile:a0974fb36f0145c5c94fcc544868149a&#34;&gt;The Makefile&lt;/h2&gt;
+&lt;h2 id=&#34;the-makefile&#34;&gt;The Makefile&lt;/h2&gt;
 
 &lt;p&gt;The meat and potatoes of this workflow starts with the &lt;code&gt;Makefile&lt;/code&gt; for those
 who don&amp;rsquo;t know &lt;a href=&#34;http://en.wikipedia.org/wiki/Make_%28software%29&#34;&gt;&lt;code&gt;make&lt;/code&gt;&lt;/a&gt;
@@ -306,7 +306,7 @@ could then use to populate a cli message among other things. The power of
 this is that we can keep our versioning in one place and it will affect
 all other parts of our project. You will see more of this in the next part.&lt;/p&gt;
 
-&lt;h2 id=&#34;the-wercker-yml:a0974fb36f0145c5c94fcc544868149a&#34;&gt;The wercker.yml&lt;/h2&gt;
+&lt;h2 id=&#34;the-wercker-yml&#34;&gt;The wercker.yml&lt;/h2&gt;
 
 &lt;p&gt;For those who do not know what &lt;a href=&#34;http://wercker.com/&#34;&gt;wercker&lt;/a&gt; is, I urge you
 to check it out, it&amp;rsquo;s currently my favorite CI/CD tool and it&amp;rsquo;s free while they
@@ -374,7 +374,7 @@ and a &lt;code&gt;PRE_RELEASE&lt;/code&gt; variable which can be &lt;code&gt;tru
 release in github as a pre-release, and thats it you should be able to fire off
 a build and release it directly to your repos github releases.&lt;/p&gt;
 
-&lt;h2 id=&#34;final-thoughts:a0974fb36f0145c5c94fcc544868149a&#34;&gt;Final Thoughts&lt;/h2&gt;
+&lt;h2 id=&#34;final-thoughts&#34;&gt;Final Thoughts&lt;/h2&gt;
 
 &lt;p&gt;With the given &lt;code&gt;Makefile&lt;/code&gt;, &lt;code&gt;wercker.yml&lt;/code&gt;, and filesystem structure I have been
 able to quickly and easily bootstrap applications with CI/CD as well as a
@@ -382,7 +382,7 @@ nice way to manage dependencies that works everywhere. I hope this is a useful
 resource and I will continue to update this process with new additions as I
 find them.&lt;/p&gt;
 
-&lt;h2 id=&#34;links:a0974fb36f0145c5c94fcc544868149a&#34;&gt;Links&lt;/h2&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://wercker.com&#34;&gt;Wercker&lt;/a&gt;&lt;/li&gt;
