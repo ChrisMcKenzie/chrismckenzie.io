@@ -1,0 +1,28 @@
+---
+categories:
+  - aircraft
+
+tags:
+  - 3d
+
+images: 
+  - src: http://share.chrismckenzie.io/E330SC_1.gif
+  - src: http://share.chrismckenzie.io/E330SC_2.jpg
+  - src: http://share.chrismckenzie.io/E330SC_3.jpg
+  - src: http://share.chrismckenzie.io/E330SC_4.jpg
+
+title: "3D Hobby Shop Extra 330SC"
+
+---
+
+## Specs
+
+
+**Wingspan:** 72 in (182.88 cm) 
+
+**Overall Length:**  69 in (175.26)
+
+**Wing Area:** 1000 sq. in. (64.516 sq. dm.)
+
+**Flying Weight:** 9.5 lb (4.3 kg)
+

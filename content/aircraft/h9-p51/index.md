@@ -13,7 +13,6 @@ images:
   - src: http://share.chrismckenzie.io/p51_2.jpg
   - src: http://share.chrismckenzie.io/p51_4.jpg
   - src: http://share.chrismckenzie.io/p51_5.jpg
-  - src: http://share.chrismckenzie.io/p51_6.jpg
 
 image: http://share.chrismckenzie.io/p51.jpg
 
