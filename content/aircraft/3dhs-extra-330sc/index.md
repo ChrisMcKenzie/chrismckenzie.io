@@ -7,9 +7,12 @@ tags:
 
 images: 
   - src: http://share.chrismckenzie.io/E330SC_1.gif
+    hero: true
   - src: http://share.chrismckenzie.io/E330SC_2.jpg
   - src: http://share.chrismckenzie.io/E330SC_3.jpg
   - src: http://share.chrismckenzie.io/E330SC_4.jpg
+
+image: http://share.chrismckenzie.io/E330SC_1.gif
 
 title: "3D Hobby Shop Extra 330SC"
 
