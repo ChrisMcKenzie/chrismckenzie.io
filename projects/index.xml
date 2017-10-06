@@ -6,16 +6,9 @@
     <description>Recent content in Projects on Christopher McKenzie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://chrismckenzie.io/projects/index.xml" rel="self" type="application/rss+xml" />
     
-    <item>
-      <title>Daniel And Amanda Brewster</title>
-      <link>http://chrismckenzie.io/projects/daniel_mandy_brewster/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrismckenzie.io/projects/daniel_mandy_brewster/</guid>
-      <description></description>
-    </item>
+	<atom:link href="http://chrismckenzie.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Dropship</title>
@@ -27,46 +20,12 @@
     </item>
     
     <item>
-      <title>Json Schema</title>
-      <link>http://chrismckenzie.io/projects/json_schema_validator/</link>
+      <title>Preflight</title>
+      <link>http://chrismckenzie.io/projects/preflight/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://chrismckenzie.io/projects/json_schema_validator/</guid>
+      <guid>http://chrismckenzie.io/projects/preflight/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>Splendid</title>
-      <link>http://chrismckenzie.io/projects/splendid/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrismckenzie.io/projects/splendid/</guid>
-      <description>&lt;p&gt;#About Splendid:
-Splendid is a text editor that is a fully pluggable and is built using web technologies and runs on the chrome app platform. Splendid uses open source tools and technologies such as.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://yeoman.io&#34;&gt;Yeoman&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://angularjs.org/&#34;&gt;AngularJS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://getuikit.com/&#34;&gt;UIKit&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/main_screenshot.png&#34; alt=&#34;&#34; /&gt;
-&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/sidebar_screenshot.png&#34; alt=&#34;&#34; /&gt;
-&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/settings_screenshot.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;#To Install:
-  1. Clone this repo &lt;code&gt;git clone https://github.com/ChrisMcKenzie/Splendid&lt;/code&gt;
-  2. you will need bower to download the dependencies you can install by entering &lt;code&gt;npm install -g bower&lt;/code&gt; in you terminal
-  3. run &lt;code&gt;bower install&lt;/code&gt; in the root of the repo.
-  2. Open Chrome and go to Settings -&amp;gt; Extensions
-  3. enable developer mode
-  4. Click load unpacked extension and go to the cloned repo and open the &lt;code&gt;/app&lt;/code&gt; folder.&lt;/p&gt;
-
-&lt;p&gt;#Wanna Help Out?
-  To get Started build Splendid you will need &lt;a href=&#34;http://yeoman.io&#34;&gt;Yeoman&lt;/a&gt; installed you can install this by entering &lt;code&gt;npm install -g yo&lt;/code&gt;. Next fork the Splendid repo and clone, you can then install it in chrome by following the above steps.&lt;/p&gt;
-
-&lt;p&gt;After the setup is pretty much done in order to debug run &lt;code&gt;grunt debug&lt;/code&gt; in your terminal which will setup the livereload server and get things rolling.&lt;/p&gt;
-</description>
     </item>
     
   </channel>

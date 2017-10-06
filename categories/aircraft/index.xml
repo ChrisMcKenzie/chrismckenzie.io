@@ -6,7 +6,9 @@
     <description>Recent content in Aircraft on Christopher McKenzie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="http://chrismckenzie.io/categories/aircraft/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://chrismckenzie.io/categories/aircraft/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>3D Hobby Shop Extra 330SC</title>
@@ -14,18 +16,10 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://chrismckenzie.io/aircraft/3dhs-extra-330sc/</guid>
-      <description>
-
-&lt;h2 id=&#34;specs&#34;&gt;Specs&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Wingspan:&lt;/strong&gt; 72 in (182.88 cm)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Overall Length:&lt;/strong&gt;  69 in (175.26)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Wing Area:&lt;/strong&gt; 1000 sq. in. (64.516 sq. dm.)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Flying Weight:&lt;/strong&gt; 9.5 lb (4.3 kg)&lt;/p&gt;
-</description>
+      <description>Specs Wingspan: 72 in (182.88 cm)
+Overall Length: 69 in (175.26)
+Wing Area: 1000 sq. in. (64.516 sq. dm.)
+Flying Weight: 9.5 lb (4.3 kg)</description>
     </item>
     
     <item>
@@ -34,29 +28,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://chrismckenzie.io/aircraft/h9-p51/</guid>
-      <description>
-
-&lt;h2 id=&#34;specs&#34;&gt;Specs:&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Wingspan:&lt;/strong&gt; 89.0 in (226 cm)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Overall Length:&lt;/strong&gt; 77.5 in (197 cm)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Wing Area:&lt;/strong&gt; 1420 sq. in. (96.1 sq. dm.)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Flying Weight:&lt;/strong&gt; 26.0-28.5 lb (11.8-13.0 kg)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Engine:&lt;/strong&gt; DA 60cc&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Radio:&lt;/strong&gt; Spektrum AR12020 12-Channel DSMX/XPlus Receiver&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Kit:&lt;/strong&gt; &lt;a href=&#34;http://www.hangar-9.com/Products/Default.aspx?ProdID=HAN4770&#34;&gt;Hanger 9 P51D&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Receiver:&lt;/strong&gt; &lt;a href=&#34;https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR12020&#34;&gt;Spektrum AR12020 12-Channel DSMX/XPlus Receiver&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description> Specs: Wingspan: 89.0 in (226 cm)
+Overall Length: 77.5 in (197 cm)
+Wing Area: 1420 sq. in. (96.1 sq. dm.)
+Flying Weight: 26.0-28.5 lb (11.8-13.0 kg)
+Engine: DA 60cc
+Radio: Spektrum AR12020 12-Channel DSMX/XPlus Receiver
+Links  Kit: Hanger 9 P51D Receiver: Spektrum AR12020 12-Channel DSMX/XPlus Receiver  </description>
     </item>
     
   </channel>
