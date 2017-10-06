@@ -16,7 +16,7 @@
     <div class="sub-content">
       <h2>Hobbies</h2>
       <div class="highlights">
-      {{ range where .Site.Pages "Section" "aircraft" }}
+      {{ range where .Data.Pages "Section" "aircraft" }}
       <div class="block">{{ .Render "summary" }}</div>
       {{ end }}
       </div>
