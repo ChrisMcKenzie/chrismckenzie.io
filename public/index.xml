@@ -7,7 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 17 Nov 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://chrismckenzie.io/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://chrismckenzie.io/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Deploying Anything with Dropship</title>
@@ -15,100 +17,8 @@
       <pubDate>Tue, 17 Nov 2015 00:00:00 +0000</pubDate>
       
       <guid>http://chrismckenzie.io/posts/deploy-anything/</guid>
-      <description>
-
-&lt;p&gt;So it has been a while since I last touched on the problem of deploying software
-to a server, with that being said I have had a chance to really dig in and
-find a solution that is flexible as well as simple for developers to setup.&lt;/p&gt;
-
-&lt;h2 id=&#34;the-idea&#34;&gt;The Idea&lt;/h2&gt;
-
-&lt;p&gt;So when I started down this path of finding a clean deployment flow for my
-company (&lt;a href=&#34;http://thecontrolgroup.com&#34;&gt;The Control Group&lt;/a&gt;) I had a few requirements It had to work for all of
-the different types of applications and languages that we build; I also did not
-want to use web hooks they are just too clunky and you have to have a server that
-is accesible on the internet so it can be called (not really a fan); The last thing
-that I wanted to be able to do is to deploy multiple versions of an application.&lt;/p&gt;
-
-&lt;h2 id=&#34;artifacts&#34;&gt;Artifacts&lt;/h2&gt;
-
-&lt;p&gt;Another part of this system is the need for storing build artifacts in our case
-tarballs containing all of the files need to run the system. for this I chose
-rackspace &lt;a href=&#34;http://www.rackspace.com/cloud/files&#34;&gt;Cloud Files&lt;/a&gt;, but Amazons &lt;a href=&#34;https://aws.amazon.com/s3/&#34;&gt;S3&lt;/a&gt; would work just as well. it simply needs
-to store our build artifacts for later downloading on to our server.&lt;/p&gt;
-
-&lt;h2 id=&#34;i-built-a-tool&#34;&gt;I built a tool!!!&lt;/h2&gt;
-
-&lt;p&gt;So now for the shameless plug! At first I implemented this system with a pretty
-unwieldy bash script, and quickly realized if anyone else is going to use this
-it needs to be simple to setup. With that I introduce &lt;a href=&#34;https://github.com/chrismckenzie/dropship&#34;&gt;Dropship&lt;/a&gt;! Dropship is
-a tool that is installed on your servers along with a simple configuration file
-telling it where to get your artifact and how to install it as well being able
-to sequentially update multiple servers.&lt;/p&gt;
-
-&lt;p&gt;Dropship uses md5sums to check freshness of your artifact comparing the one that
-is installed with the sum of file on the artifact repo, it will then repeat this
-process on the configured interval and if the sums do not match it will then start
-the update process (pretty simple eh).&lt;/p&gt;
-
-&lt;p&gt;A &lt;a href=&#34;https://github.com/chrismckenzie/dropship&#34;&gt;Dropship&lt;/a&gt; config is and HCL file like the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# vim: set ft=hcl :
-service &amp;quot;my-service&amp;quot; {
-  # Use a semaphore to update one machine at a time
-  sequentialUpdates = true
-
-  # Check for updates every 10s
-  checkInterval = &amp;quot;10s&amp;quot;
-
-  # Run this command before update starts
-  before &amp;quot;script&amp;quot; {
-    command = &amp;quot;initctl my-service stop&amp;quot;
-  }
-
-  # Artifact defines what repository to use (rackspace) and where 
-  # your artifact live on that repository
-  artifact &amp;quot;s3&amp;quot; {
-    bucket = &amp;quot;my-s3bucket&amp;quot;
-    path = &amp;quot;my-service.tar.gz&amp;quot;
-    destination = &amp;quot;./test/dest&amp;quot;
-  }
-
-  # After successful update send an event to graphite
-  # this allows you to show deploy annotations in tools like grafana
-  # 
-  # The graphite hook will automatically add this services name into the 
-  # graphite tags. You also have access to all of the services meta data
-  # like Name, &amp;quot;current hash&amp;quot;, hostname.
-  after &amp;quot;graphite-event&amp;quot; {
-    host = &amp;quot;http://&amp;lt;my-graphite-server&amp;gt;&amp;quot;
-    tags = &amp;quot;deployment&amp;quot;
-    what = &amp;quot;deployed to {{.Name}} on {{.Hostname}}&amp;quot;
-    data = &amp;quot;{{.Hash}}&amp;quot;
-  }
-
-  # Run this command after the update finishes
-  after &amp;quot;script&amp;quot; {
-    command = &amp;quot;initctl my-service start&amp;quot;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As you can see there are a bunch of options available for installing your system,
-you can set hooks that will be called &lt;code&gt;before&lt;/code&gt; and &lt;code&gt;after&lt;/code&gt; your artifact is installed.&lt;/p&gt;
-
-&lt;p&gt;Hooks are a very interesting feature and I have implemented a few helpful hooks
-to start with but hope to add many more. One hook worth mentioning is the
-&lt;code&gt;graphite-event&lt;/code&gt; hook this will create an event in graphite which can be viewed as
-a pretty annotation on your graphs in grafana for example, you can then see how
-your latest deployment affected your stats.&lt;/p&gt;
-
-&lt;p&gt;Currently this is available as a Debian package and can be installed by following
-the guide &lt;a href=&#34;https://github.com/ChrisMcKenzie/dropship#installation&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Please let me know what you think of this project in the comments. And feel free
-to file issues and feature requests &lt;a href=&#34;https://github.com/ChrisMcKenzie/dropship/issues&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>So it has been a while since I last touched on the problem of deploying software to a server, with that being said I have had a chance to really dig in and find a solution that is flexible as well as simple for developers to setup.
+The Idea So when I started down this path of finding a clean deployment flow for my company (The Control Group) I had a few requirements It had to work for all of the different types of applications and languages that we build; I also did not want to use web hooks they are just too clunky and you have to have a server that is accesible on the internet so it can be called (not really a fan); The last thing that I wanted to be able to do is to deploy multiple versions of an application.</description>
     </item>
     
     <item>
@@ -117,247 +27,8 @@ to file issues and feature requests &lt;a href=&#34;https://github.com/ChrisMcKe
       <pubDate>Mon, 23 Feb 2015 00:00:00 +0000</pubDate>
       
       <guid>http://chrismckenzie.io/posts/deploying-with-golang/</guid>
-      <description>
-
-&lt;p&gt;Recently I have been building a lot of go applications, and I think I have
-come up with a good pattern for building an app that is ready for deployment
-to either a server or to users. This includes build/run for development, testing,
-dependency management, and packaging. While this process is still being actively developed I believe it is at a
-state in which to share.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h2 id=&#34;the-structure&#34;&gt;The Structure&lt;/h2&gt;
-
-&lt;p&gt;I keep a very simple structure for my projects and it is as follows.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  |- my-project
-    |- bin/     # place to store binaries (in .gitignore)
-    |- dist/    # place to store packaged apps (in .gitignore)
-    |- pkg/     # for sub-packages
-    |- _vendor/ # our custom GOPATH (optional .gitignore)
-    |- Makefile
-    |- main.go
-    |- wercker.yml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;the-makefile&#34;&gt;The Makefile&lt;/h2&gt;
-
-&lt;p&gt;The meat and potatoes of this workflow starts with the &lt;code&gt;Makefile&lt;/code&gt; for those
-who don&amp;rsquo;t know &lt;a href=&#34;http://en.wikipedia.org/wiki/Make_%28software%29&#34;&gt;&lt;code&gt;make&lt;/code&gt;&lt;/a&gt;
-is a build system. Make allows us to download dependencies, keep version,
-as well build and package.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-make&#34;&gt;.PHONY: version all run dist clean
-APP_NAME := my-project
-SHA := $(shell git rev-parse --short HEAD)
-BRANCH := $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
-VER := 0.0.1
-DIR=.
-
-ifdef WERCKER_OUTPUT_DIR 
-  DIR = $(WERCKER_OUTPUT_DIR)
-endif
-
-ifdef APP_SUFFIX
-  VERSION = $(VER)-$(subst /,-,$(APP_SUFFIX))
-else 
-  VERSION = $(VER)-$(BRANCH)
-endif
-
-BUILD := $(SHA)-$(BRANCH)
-
-# Go setup
-GO=go
-TEST=go test
-GOPATH := ${PWD}/_vendor:${GOPATH}
-export GOPATH
-
-DEPENDENCIES := github.com/gin-gonic/gin \
-                github.com/dancannon/gorethink
-
-# Sources and Targets
-EXECUTABLES :=bin/$(APP_NAME)
-# Build Binaries setting main.version and main.build vars
-LDFLAGS :=-ldflags &amp;quot;-X main.version $(VERSION) -X main.build $(BUILD)&amp;quot;
-# Package target
-PACKAGE :=$(DIR)/dist/$(APP_NAME)-$(VERSION).tar.gz
-
-# Custom go path for project
-VENDOR_DIR :=_vendor/src
-DEPENDENCIES_DIR := $(addprefix $(VENDOR_DIR),$(DEPENDENCIES))
-
-.DEFAULT: all
-
-all: | $(EXECUTABLES)
-
-# print the version
-version:
-  @echo $(VERSION)
-# print the name of the app
-name:
-  @echo $(APP_NAME)
-
-# print the package path
-package:
-  @echo $(PACKAGE)
-
-# We have to set GOPATH to just the _vendor
-# directory to ensure that `go get` doesn&#39;t
-# update packages in our primary GOPATH instead.
-# This will happen if you already have the package
-# installed in GOPATH since `go get` will use
-# that existing location as the destination.
-$(DEPENDENCIES_DIR):
-  @echo Downloading $(@:$(VENDOR_DIR)%=%)...
-  @GOPATH=${PWD}/_vendor go get $(@:$(VENDOR_DIR)%=%)
-
-# This defines the req&#39;s for each binary
-# if you only have one then these can be placed under
-# $(EXECUTABLES): Target
-# you must define the main file for each binary that will
-# be placed in bin.
-# For Example:
-# -----------
-# binary #1
-# bin/$(APP_NAME): main.go pkg/* $(DEPENDENCIES_DIR)
-# binary #2
-# bin/my_other_bin: other.go pkg/* $(DEPENDENCIES_DIR)
-bin/$(APP_NAME): main.go $(DEPENDENCIES_DIR) 
-
-$(EXECUTABLES): 
-  $(GO) build $(LDFLAGS) -o $@ $&amp;lt;
-
-run: bin/$(APP_NAME)
-  bin/$(APP_NAME)
-
-test: 
-  $(TEST) -r -cover
-
-clean:
-  @echo Cleaning Workspace...
-  rm -dRf _vendor
-  rm -dRf bin
-  rm -dRf dist
-
-$(PACKAGE): all
-  @echo Packaging Binaries...
-  @mkdir -p tmp/$(APP_NAME)/bin
-  @cp -R bin/ tmp/$(APP_NAME)/
-  @mkdir -p $(DIR)/dist/
-  tar -cf $@ -C tmp $(APP_NAME);
-  @rm -rf tmp
-
-dist: $(PACKAGE)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This gives us a small list of important commands:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;make&lt;/code&gt; will build all of the targets defined in EXECUTABLES&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;make test&lt;/code&gt; will run go test or whatever you set TEST to&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;make clean&lt;/code&gt; will remove dirs &lt;code&gt;bin&lt;/code&gt;, &lt;code&gt;_vendor&lt;/code&gt;, and &lt;code&gt;dist&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;make dist&lt;/code&gt; will package your app into a tarball in the &lt;code&gt;dist&lt;/code&gt; dir.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;You may have also noticed a few things pertaining to versioning these
-are some cool tricks to make versioning awesome and easy when releasing
-your app into the wild.&lt;/p&gt;
-
-&lt;p&gt;The first is the &lt;code&gt;VERSION&lt;/code&gt; variable, it is composed of two parts the
-&lt;a href=&#34;http://semver.org/&#34;&gt;semver&lt;/a&gt;, a tag (&lt;code&gt;beta&lt;/code&gt;, &lt;code&gt;rc&lt;/code&gt;, etc) or the branch name.
-The second part is the &lt;code&gt;BUILD&lt;/code&gt; variable, it is composed of two parts the
-commit sha, and the branch it was built from.&lt;/p&gt;
-
-&lt;p&gt;This all comes together in the &lt;code&gt;LDFLAGS&lt;/code&gt; variable which will set two
-corresponding variables in the &lt;code&gt;main&lt;/code&gt; package of your code which you
-could then use to populate a cli message among other things. The power of
-this is that we can keep our versioning in one place and it will affect
-all other parts of our project. You will see more of this in the next part.&lt;/p&gt;
-
-&lt;h2 id=&#34;the-wercker-yml&#34;&gt;The wercker.yml&lt;/h2&gt;
-
-&lt;p&gt;For those who do not know what &lt;a href=&#34;http://wercker.com/&#34;&gt;wercker&lt;/a&gt; is, I urge you
-to check it out, it&amp;rsquo;s currently my favorite CI/CD tool and it&amp;rsquo;s free while they
-are in beta. I use wercker as my platform for testing my code and more
-importantly building/releasing my code. In order to use wercker you must first
-setup your repo in wercker, then you must add a &lt;code&gt;wercker.yml&lt;/code&gt; file to your repo.
-Wercker gives us two flows, a Build Flow and a Deploy Flow and they do exactly
-that.&lt;/p&gt;
-
-&lt;p&gt;My wercker configuration takes advantage of a lot of werckers features namely
-the Custom deploy targets and Pipeline variables. this allows me to create deploy
-targets for both &lt;em&gt;final&lt;/em&gt; releases and &lt;em&gt;release candidates&lt;/em&gt;. My &amp;ldquo;deployments&amp;rdquo;
-are in the form of &lt;a href=&#34;https://github.com/blog/1547-release-your-software&#34;&gt;Github Releases&lt;/a&gt;
-and recieve a tag of the version, and the packaged binaries.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;box: wercker/golang@1.2.3
-
-deploy:
-    steps:
-        # Sets the go workspace and places your package
-        # at the right place in the workspace tree
-        - setup-go-workspace
-        - script: 
-            name: Build App
-            code: make dist
-        - script:
-            name: Make Exports
-            code: | 
-                export APP_VERSION=$(make version)
-                export PACKAGE_PATH=$(make package)
-        - github-create-release:
-            token: $GITHUB_TOKEN
-            tag: v$APP_VERSION
-            prerelease: $PRE_RELEASE
-            title: Version $APP_VERSION
-        - github-upload-asset:
-            token: $GITHUB_TOKEN
-            file: $PACKAGE_PATH
-            release_id: $WERCKER_GITHUB_CREATE_RELEASE_ID
-
-# Build definition
-build:
-  # The steps that will be executed on build
-  steps:
-    # Sets the go workspace and places your package
-    # at the right place in the workspace tree
-    - setup-go-workspace
-    - script:
-        name: Unit Test
-        code: |
-            make test
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This file will instruct wercker to first run tests on your project and then
-once completed you may run a &amp;ldquo;deploy&amp;rdquo; on your test that will package up your
-app and then ship the tarball off to github release with git tags on the
-given commit. There are however a few steps needed to make this work, you
-must first create a deploy target in wercker by going to your project and
-clicking &lt;code&gt;settings&lt;/code&gt; -&amp;gt; &lt;code&gt;deploy targets&lt;/code&gt; and adding a new &amp;ldquo;Custom Deploy&amp;rdquo;
-target you may then choose a name such as &amp;ldquo;release&amp;rdquo; and select whether you
-wish to auto-deploy a specific branch. Next you must add two pipeline variables
-an &lt;code&gt;APP_SUFFIX&lt;/code&gt; which will contain the identifier for this release (eq: &lt;code&gt;beta&lt;/code&gt;),
-and a &lt;code&gt;PRE_RELEASE&lt;/code&gt; variable which can be &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; and will flag the
-release in github as a pre-release, and thats it you should be able to fire off
-a build and release it directly to your repos github releases.&lt;/p&gt;
-
-&lt;h2 id=&#34;final-thoughts&#34;&gt;Final Thoughts&lt;/h2&gt;
-
-&lt;p&gt;With the given &lt;code&gt;Makefile&lt;/code&gt;, &lt;code&gt;wercker.yml&lt;/code&gt;, and filesystem structure I have been
-able to quickly and easily bootstrap applications with CI/CD as well as a
-nice way to manage dependencies that works everywhere. I hope this is a useful
-resource and I will continue to update this process with new additions as I
-find them.&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://wercker.com&#34;&gt;Wercker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ChrisMcKenzie/Deploy-With-Golang-Demo&#34;&gt;Demo Project&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>Recently I have been building a lot of go applications, and I think I have come up with a good pattern for building an app that is ready for deployment to either a server or to users. This includes build/run for development, testing, dependency management, and packaging. While this process is still being actively developed I believe it is at a state in which to share.
+The Structure I keep a very simple structure for my projects and it is as follows.</description>
     </item>
     
     <item>
@@ -366,27 +37,10 @@ find them.&lt;/p&gt;
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://chrismckenzie.io/aircraft/3dhs-extra-330sc/</guid>
-      <description>
-
-&lt;h2 id=&#34;specs&#34;&gt;Specs&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Wingspan:&lt;/strong&gt; 72 in (182.88 cm)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Overall Length:&lt;/strong&gt;  69 in (175.26)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Wing Area:&lt;/strong&gt; 1000 sq. in. (64.516 sq. dm.)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Flying Weight:&lt;/strong&gt; 9.5 lb (4.3 kg)&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Daniel And Amanda Brewster</title>
-      <link>http://chrismckenzie.io/projects/daniel_mandy_brewster/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrismckenzie.io/projects/daniel_mandy_brewster/</guid>
-      <description></description>
+      <description>Specs Wingspan: 72 in (182.88 cm)
+Overall Length: 69 in (175.26)
+Wing Area: 1000 sq. in. (64.516 sq. dm.)
+Flying Weight: 9.5 lb (4.3 kg)</description>
     </item>
     
     <item>
@@ -404,72 +58,22 @@ find them.&lt;/p&gt;
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://chrismckenzie.io/aircraft/h9-p51/</guid>
-      <description>
-
-&lt;h2 id=&#34;specs&#34;&gt;Specs:&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Wingspan:&lt;/strong&gt; 89.0 in (226 cm)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Overall Length:&lt;/strong&gt; 77.5 in (197 cm)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Wing Area:&lt;/strong&gt; 1420 sq. in. (96.1 sq. dm.)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Flying Weight:&lt;/strong&gt; 26.0-28.5 lb (11.8-13.0 kg)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Engine:&lt;/strong&gt; DA 60cc&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Radio:&lt;/strong&gt; Spektrum AR12020 12-Channel DSMX/XPlus Receiver&lt;/p&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Kit:&lt;/strong&gt; &lt;a href=&#34;http://www.hangar-9.com/Products/Default.aspx?ProdID=HAN4770&#34;&gt;Hanger 9 P51D&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Receiver:&lt;/strong&gt; &lt;a href=&#34;https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR12020&#34;&gt;Spektrum AR12020 12-Channel DSMX/XPlus Receiver&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description> Specs: Wingspan: 89.0 in (226 cm)
+Overall Length: 77.5 in (197 cm)
+Wing Area: 1420 sq. in. (96.1 sq. dm.)
+Flying Weight: 26.0-28.5 lb (11.8-13.0 kg)
+Engine: DA 60cc
+Radio: Spektrum AR12020 12-Channel DSMX/XPlus Receiver
+Links  Kit: Hanger 9 P51D Receiver: Spektrum AR12020 12-Channel DSMX/XPlus Receiver  </description>
     </item>
     
     <item>
-      <title>Json Schema</title>
-      <link>http://chrismckenzie.io/projects/json_schema_validator/</link>
+      <title>Preflight</title>
+      <link>http://chrismckenzie.io/projects/preflight/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://chrismckenzie.io/projects/json_schema_validator/</guid>
+      <guid>http://chrismckenzie.io/projects/preflight/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>Splendid</title>
-      <link>http://chrismckenzie.io/projects/splendid/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrismckenzie.io/projects/splendid/</guid>
-      <description>&lt;p&gt;#About Splendid:
-Splendid is a text editor that is a fully pluggable and is built using web technologies and runs on the chrome app platform. Splendid uses open source tools and technologies such as.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://yeoman.io&#34;&gt;Yeoman&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://angularjs.org/&#34;&gt;AngularJS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://getuikit.com/&#34;&gt;UIKit&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/main_screenshot.png&#34; alt=&#34;&#34; /&gt;
-&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/sidebar_screenshot.png&#34; alt=&#34;&#34; /&gt;
-&lt;img src=&#34;https://raw.github.com/ChrisMcKenzie/Splendid/master/docs/Images/settings_screenshot.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;#To Install:
-  1. Clone this repo &lt;code&gt;git clone https://github.com/ChrisMcKenzie/Splendid&lt;/code&gt;
-  2. you will need bower to download the dependencies you can install by entering &lt;code&gt;npm install -g bower&lt;/code&gt; in you terminal
-  3. run &lt;code&gt;bower install&lt;/code&gt; in the root of the repo.
-  2. Open Chrome and go to Settings -&amp;gt; Extensions
-  3. enable developer mode
-  4. Click load unpacked extension and go to the cloned repo and open the &lt;code&gt;/app&lt;/code&gt; folder.&lt;/p&gt;
-
-&lt;p&gt;#Wanna Help Out?
-  To get Started build Splendid you will need &lt;a href=&#34;http://yeoman.io&#34;&gt;Yeoman&lt;/a&gt; installed you can install this by entering &lt;code&gt;npm install -g yo&lt;/code&gt;. Next fork the Splendid repo and clone, you can then install it in chrome by following the above steps.&lt;/p&gt;
-
-&lt;p&gt;After the setup is pretty much done in order to debug run &lt;code&gt;grunt debug&lt;/code&gt; in your terminal which will setup the livereload server and get things rolling.&lt;/p&gt;
-</description>
     </item>
     
   </channel>
