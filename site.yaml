@@ -2,7 +2,7 @@
 # Site settings
 title: Christopher McKenzie
 baseurl: http://chrismckenzie.io/
-email: chris@keyboardsurfer.com
+email: chris@chrismckenzie.io
 languageCode: en-us
 metaDataFormat: yaml
 newContentEditor: vim
@@ -21,7 +21,7 @@ params:
   google_userid: 112997148822003661332
   facebook_username: cmckenzie13
   description_title: A little about me
-  description: | 
+  description: |
     My name is Christopher McKenzie, 
     I am a Father, Senior Systems Engineer, and Go Enthuist in Upland, CA.
     I am a collector of hobbies you might say, I fly model aircraft, play
