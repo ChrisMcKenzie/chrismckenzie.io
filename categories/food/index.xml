@@ -7,7 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 24 Jul 2015 23:16:34 -0700</lastBuildDate>
-    <atom:link href="http://chrismckenzie.io/categories/food/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://chrismckenzie.io/categories/food/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Breakfast Burrito</title>
@@ -15,29 +17,17 @@
       <pubDate>Fri, 24 Jul 2015 23:16:34 -0700</pubDate>
       
       <guid>http://chrismckenzie.io/recipes/breakfast_burrito/</guid>
-      <description>
-
-&lt;p&gt;&lt;em&gt;This recipe serves 8&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;2 lb   - Tillamook Medium Cheddar Cheese&lt;/li&gt;
-&lt;li&gt;1 lb   - Sage Sausage&lt;/li&gt;
-&lt;li&gt;2 lb   - Thick cut peppered bacon&lt;/li&gt;
-&lt;li&gt;16     - Eggs&lt;/li&gt;
-&lt;li&gt;1 tbsp - Butter&lt;/li&gt;
-&lt;li&gt;8      - XXL Flour Tortillas&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;instructions&#34;&gt;Instructions&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Cook Sausage, Bacon, and Eggs seperately&lt;/li&gt;
-&lt;li&gt;Mix All Ingredients in pot with cheese&lt;/li&gt;
-&lt;li&gt;Wrap ~1lb of mixture in lightly warmed tortilla.&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <description> This recipe serves 8
+Ingredients  2 lb - Tillamook Medium Cheddar Cheese 1 lb - Sage Sausage 2 lb - Thick cut peppered bacon 16 - Eggs 1 tbsp - Butter 8 - XXL Flour Tortillas  Instructions  Cook Sausage, Bacon, and Eggs seperately Mix All Ingredients in pot with cheese Wrap ~1lb of mixture in lightly warmed tortilla.  </description>
+    </item>
+    
+    <item>
+      <title>Spaghetti</title>
+      <link>http://chrismckenzie.io/recipes/spaghetti/</link>
+      <pubDate>Fri, 24 Jul 2015 23:12:28 -0700</pubDate>
+      
+      <guid>http://chrismckenzie.io/recipes/spaghetti/</guid>
+      <description> Ingredients  1 - 106oz. Can Tomato Sauce 8- 6oz. Can Tomato Paste 1&amp;frasl;2 Cup Granulated Garlic 1&amp;frasl;3 Cup Whole Oregano 3&amp;frasl;8 Cup Worcestershire 1&amp;frasl;3 Cup Italian Dressing 1&amp;frasl;8 Cup Lemon Juice 1&amp;frasl;8 Cup Sugar 2 Pounds Hamburger (pre-cooked) 3- 4oz. Can Mushrooms (Optional) 1 1&amp;frasl;2 Cans of Water (Tomato Sauce Can) dash of pepper  Instructions  In large pot place first 8 ingredients than add 1&amp;frasl;2 Can of water and mix thoroughly (can us mixer if needed) Once thoroughly mixed add rest of water and stir by hand Heat on low flame until hot throughout stirring occasionally Turn off stove and let mixture cool Turn on stove low flame again and again heat sauce Brown meat in skillet until thoroughly cooked Drain all fat off of meat and rinse thoroughly Add meat to sauce May add mushrooms if desired Heat and cool approximately 6 hours serve with evergood hot links  </description>
     </item>
     
   </channel>
