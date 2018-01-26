@@ -14,7 +14,7 @@
       <nav>
         <ul>
         {{ range .Site.Menus.main }}
-        {{if ne .Name "Projects"}}
+        {{if and (ne .Name "Projects") (ne .Name "Recipes")}}
         <li><a class="sidebar-nav-item" href="{{.URL}}">{{ .Name }}</a></li>
         {{end}}
         {{ end }}

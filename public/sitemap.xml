@@ -8,6 +8,16 @@
   </url>
   
   <url>
+    <loc>http://chrismckenzie.io/recipes/breakfast_burrito/</loc>
+    <lastmod>2015-07-24T23:16:34-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://chrismckenzie.io/recipes/spaghetti/</loc>
+    <lastmod>2015-07-24T23:12:28-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://chrismckenzie.io/posts/deploying-with-golang/</loc>
     <lastmod>2015-02-23T00:00:00+00:00</lastmod>
   </url>
@@ -65,6 +75,12 @@
   </url>
   
   <url>
+    <loc>http://chrismckenzie.io/categories/food/</loc>
+    <lastmod>2015-07-24T23:16:34-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://chrismckenzie.io/tags/golang/</loc>
     <lastmod>2015-11-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -97,6 +113,12 @@
   
   <url>
     <loc>http://chrismckenzie.io/projects/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://chrismckenzie.io/recipes/</loc>
+    <lastmod>2015-07-24T23:16:34-07:00</lastmod>
     <priority>0</priority>
   </url>
   
