@@ -117,9 +117,18 @@
   </url>
   
   <url>
+    <loc>http://chrismckenzie.io/categories/projects/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://chrismckenzie.io/recipes/</loc>
     <lastmod>2015-07-24T23:16:34-07:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://chrismckenzie.io/projects/subourban/</loc>
   </url>
   
   <url>
