@@ -1,7 +1,7 @@
-<a href="{{ .Permalink }}">
-  <div class="hero" {{ if isset .Params "image" }}style="background-image:url({{ .Params.image }}); background-position: {{ .Params.image_position | default "Roboto"}};" {{end}}>
+<a href="{{if isset .Params "link"}}{{.Params.link}}{{else}}{{ .Permalink }}{{end}}">
+  <div {{ if isset .Params "image" }} class="hero" style="background-image:url({{ .Params.image }}); background-position: {{ .Params.image_position | default "Roboto"}};" {{else}} class="hero no-image" {{end}}>
     <div class="title">
-      {{ .Title }}
+      {{ .Title }} <small>{{ .Params.tagline }}</small>
       {{if not .Date.IsZero }}<span>{{.Date.Format "Jan 2, 2006"}}</span>{{end}}
     </div>
   </div>

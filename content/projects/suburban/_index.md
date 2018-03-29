@@ -1,18 +1,19 @@
 ---
-categories:
-  - projects
-
 title: Suburban
-type: project
-tagline: Overland Vehicle
-color: "#564334"
 
+hidedate: true
 images:
   - src: http://share.chrismckenzie.io/truck.jpg
     hero: true
 
 image: http://share.chrismckenzie.io/truck.jpg
 
+tagline: Overland Vehicle
+color: "#564334"
+
+menu:
+  projects:
+    weight: 22
 ---
 
 I bought this 1990 Suburban 2500 at the end of 2017 with the goal of turning it

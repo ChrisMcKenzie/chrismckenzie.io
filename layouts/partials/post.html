@@ -1,0 +1,27 @@
+<section class="post">
+  <div>
+    <div class="title">
+      <a href="{{ .Permalink }}">{{ .Title }} <small>{{.Params.tagline}}</small></a>
+      {{if ne .Params.hidedate true }}<span class="date">{{.Date.Format "Jan 2, 2006"}}</span>{{ end }}
+    </div>
+  </div>
+  <div class="content">
+    {{if .Params.images }}
+    <h2>Images</h2>
+    <div class="images">
+      {{range .Params.images}}
+      <div {{if eq .hero true}}class="primary"{{end}}><img  src="{{ .src }}"/></div>
+      {{end}}
+    </div>
+    {{end}}
+
+    <div class="content">
+      {{ .Content }}
+    </div>
+    {{ if ne .Params.disable_comments true }}
+      {{ partial "sharing.html" . }}
+      {{ template "_internal/disqus.html" . }}
+    {{ end }}
+  </div>
+
+</section>

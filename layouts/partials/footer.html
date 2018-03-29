@@ -10,8 +10,8 @@
   <div class="right">
     <h5>Projects</h5>
     <ul>
-    {{ range where .Site.Pages "Section" "projects" }}
-      {{if ne .Name "Projects"}}
+    {{ range .Site.Menus.projects }}
+      {{with .Page}}
       <li {{if isset .Params "color"}}style="color: {{.Params.color}};" {{end}}>
         {{ if isset .Params "link" }}
           <a href="{{ .Params.link }}">
@@ -24,7 +24,7 @@
         {{ end }}
         <small>{{ .Params.tagline }}</small>
       </li>
-      {{ end }}
+      {{end}}
     {{ end }}
     </ul>
   </div>

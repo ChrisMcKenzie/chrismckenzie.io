@@ -13,11 +13,10 @@
     <div class="information">
       <nav>
         <ul>
-        {{ range .Site.Menus.main }}
-        {{if ne .Name "Projects"}}
-        <li><a class="sidebar-nav-item" href="{{.URL}}">{{ .Name }}</a></li>
-        {{end}}
-        {{ end }}
+          {{ $currentPage := . }}
+          {{ range .Site.Menus.main }}
+          <li><a class="sidebar-nav-item{{if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active{{end}}" href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a></li>
+          {{ end }}
         </ul>
       </nav>
     </div>

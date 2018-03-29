@@ -254,7 +254,8 @@ header nav ul li a:hover { color: #F64; -webkit-transition: color .25s ease-in-o
 header .information { margin-top: 20px; color: #3c3c3c; font-size: 24pt; font-weight: 300; }
 
 /*=========={ POSTS }==========*/
-section { display: block; position: relative; background: #fff; padding: 40px 50px; width: auto; max-width: 860px; margin: 0 auto; margin-bottom: 20px; border-radius: 2px; -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */ -moz-box-sizing: border-box; /* Firefox, other Gecko */ box-sizing: border-box; /* Opera/IE 8+ */ }
+section {width: auto; max-width: 860px; margin: 0 auto; margin-bottom: 20px;-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */ -moz-box-sizing: border-box; /* Firefox, other Gecko */ box-sizing: border-box; /* Opera/IE 8+ */ }
+.post { padding: 40px 50px; display: block; position: relative; background: #fff;  border-radius: 2px; }
 
 .post-header, .post-image, .post-video { max-width: 860px; height: 200px; background-size: cover; margin: 0 auto; margin-bottom: -3px; position: relative; z-index: 2; display: block; -webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px; border-top-left-radius: 3px; border-top-right-radius: 3px; }
 
@@ -317,58 +318,46 @@ section { display: block; position: relative; background: #fff; padding: 40px 50
 
 .hero .title span { padding-top: 2px; float: right; text-transform: uppercase; font-size: 12px; margin-right: 10px; }
 
+.hero.no-image { height: 40px; }
+
+.hero.no-image .title { border-radius: 5px; }
+
+.hero .title small { font-size: 11px; }
+
 .post-image:hover { text-decoration: none; }
 
 .post-image { margin-bottom: -10px; }
 
 .post-video iframe { margin-bottom: -10px; width: 100%; height: 450px; }
 
-section .date:hover { color: #ff6644; }
+.post .date:hover { color: #ff6644; }
+.post .title { font-weight: 300; font-size: 2.25em; margin-bottom: 30px; max-width: 80%; }
+.post .title a { font-weight: 300; display: block; -webkit-transition: color .25s ease-in-out; -moz-transition: color .25s ease-in-out; -o-transition: color .25s ease-in-out; transition: color .25s ease-in-out; }
+.post .title a:hover { text-decoration: none; }
+.post .title span { font-weight: bold; font-size: 16px; color: #d7d7d7; text-transform: uppercase; -webkit-transition: color .25s ease-in-out; -moz-transition: color .25s ease-in-out; -o-transition: color .25s ease-in-out; transition: color .25s ease-in-out; }
+.post .title small a { margin-left: 10px; font-size: 12px; font-weight: bold; color: #999; -webkit-transition: color .25s ease-in-out; -moz-transition: color .25s ease-in-out; -o-transition: color .25s ease-in-out; transition: color .25s ease-in-out; }
+.post .title a small {font-size: 14px;}
+.post .title small a:hover { text-decoration: none; color: #ff6644; }
+.post .post_intro { color: #aaa; font-size: 20px; letter-spacing: 1px; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
+.post button { margin: 0; }
 
-section .title { font-weight: 300; font-size: 2.25em; margin-bottom: 30px; max-width: 80%; }
-
-section .title a { font-weight: 300; display: block; -webkit-transition: color .25s ease-in-out; -moz-transition: color .25s ease-in-out; -o-transition: color .25s ease-in-out; transition: color .25s ease-in-out; }
-
-section .title a:hover { text-decoration: none; }
-
-section .title span { font-weight: bold; font-size: 16px; color: #d7d7d7; text-transform: uppercase; -webkit-transition: color .25s ease-in-out; -moz-transition: color .25s ease-in-out; -o-transition: color .25s ease-in-out; transition: color .25s ease-in-out; }
-
-section .title small a { margin-left: 10px; font-size: 12px; font-weight: bold; color: #999; -webkit-transition: color .25s ease-in-out; -moz-transition: color .25s ease-in-out; -o-transition: color .25s ease-in-out; transition: color .25s ease-in-out; }
-
-section .title small a:hover { text-decoration: none; color: #ff6644; }
-
-section .post_intro { color: #aaa; font-size: 20px; letter-spacing: 1px; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
-
-section button { margin: 0; }
+section h3.title {margin-left: 8px;}
 
 /* Post Types */
-section.quote { background: #f6f4ee; padding: 80px 80px 30px 200px; -webkit-transition: all .25s ease-in-out; -moz-transition: all .25s ease-in-out; -o-transition: all .25s ease-in-out; transition: all .25s ease-in-out; }
-
-section.quote p { font-size: 24px; line-height: 48px; text-align: right; -webkit-transition: all .25s ease-in-out; -moz-transition: all .25s ease-in-out; -o-transition: all .25s ease-in-out; transition: all .25s ease-in-out; }
-
-section.quote .author { display: block; font-size: 16px; text-transform: uppercase; color: #bbb; -webkit-transition: all .25s ease-in-out; -moz-transition: all .25s ease-in-out; -o-transition: all .25s ease-in-out; transition: all .25s ease-in-out; }
-
-section.quote:hover { background: #ff6644; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 -1px 3px #d83e1c; }
-
-section.quote:hover p { color: #fff; }
-
-section.quote:hover .author { color: #c93c1d; }
-
-section .hashtags { font-size: 14px; margin: 38px 0 0 0; position: absolute; right: -3px; top: 0; width: 103px; }
-
-section .hashtags:hover { -moz-box-shadow: 0px 0px 5px 2px #ccc; -webkit-box-shadow: 0px 0px 5px 2px #ccc; box-shadow: 0px 0px 5px 2px #ccc; }
-
-section .hashtags .hashtag:first-child { opacity: 1; height: 26px; background-color: #F5F5F5; }
-
-section .hashtags:hover .hashtag { opacity: 1; height: 26px; }
-
-section .hashtags .hashtag { float: right; clear: both; height: 0px; width: 80px; line-height: 26px; font-weight: bold; word-wrap: normal; padding: 4px 10px; border-right: 3px solid #ff6644; background: #fff; opacity: 0; text-align: right; -webkit-transition: all .1s ease-in-out; -moz-transition: all .1s ease-in-out; -o-transition: all .1s ease-in-out; transition: all .1s ease-in-out; }
-
-section .hashtags .hashtag.draft { border-right: 3px solid #2ecc71; }
-
-section .hashtags .hashtag:hover { background: #aaa28c; color: #fff; }
-
-section p { font-weight: 300; font-size: 1.1em; color: #333; }
+.post .quote { background: #f6f4ee; padding: 80px 80px 30px 200px; -webkit-transition: all .25s ease-in-out; -moz-transition: all .25s ease-in-out; -o-transition: all .25s ease-in-out; transition: all .25s ease-in-out; }
+.post .quote p { font-size: 24px; line-height: 48px; text-align: right; -webkit-transition: all .25s ease-in-out; -moz-transition: all .25s ease-in-out; -o-transition: all .25s ease-in-out; transition: all .25s ease-in-out; }
+.post .quote .author { display: block; font-size: 16px; text-transform: uppercase; color: #bbb; -webkit-transition: all .25s ease-in-out; -moz-transition: all .25s ease-in-out; -o-transition: all .25s ease-in-out; transition: all .25s ease-in-out; }
+.post .quote:hover { background: #ff6644; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 -1px 3px #d83e1c; }
+.post .quote:hover p { color: #fff; }
+.post .quote:hover .author { color: #c93c1d; }
+.post  .hashtags { font-size: 14px; margin: 38px 0 0 0; position: absolute; right: -3px; top: 0; width: 103px; }
+.post  .hashtags:hover { -moz-box-shadow: 0px 0px 5px 2px #ccc; -webkit-box-shadow: 0px 0px 5px 2px #ccc; box-shadow: 0px 0px 5px 2px #ccc; }
+.post  .hashtags .hashtag:first-child { opacity: 1; height: 26px; background-color: #F5F5F5; }
+.post  .hashtags:hover .hashtag { opacity: 1; height: 26px; }
+.post  .hashtags .hashtag { float: right; clear: both; height: 0px; width: 80px; line-height: 26px; font-weight: bold; word-wrap: normal; padding: 4px 10px; border-right: 3px solid #ff6644; background: #fff; opacity: 0; text-align: right; -webkit-transition: all .1s ease-in-out; -moz-transition: all .1s ease-in-out; -o-transition: all .1s ease-in-out; transition: all .1s ease-in-out; }
+.post  .hashtags .hashtag.draft { border-right: 3px solid #2ecc71; }
+.post  .hashtags .hashtag:hover { background: #aaa28c; color: #fff; }
+.post  p { font-weight: 300; font-size: 1.1em; color: #333; }
 
 /* Blockquotes */
 blockquote { width: 100%; padding: 0 0 0 30px; margin: 10px 0 30px 0; border-left: 10px solid #ff6644; font-size: 18px; color: #838689; -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */ -moz-box-sizing: border-box; /* Firefox, other Gecko */ box-sizing: border-box; /* Opera/IE 8+ */ }
