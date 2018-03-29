@@ -6,6 +6,8 @@ tags:
   - warbird
   - large scale
 
+pages_title: Flight Log
+
 images: 
   - src: http://share.chrismckenzie.io/p51.jpg
     hero: true
@@ -18,6 +20,7 @@ image: http://share.chrismckenzie.io/p51.jpg
 
 title: "Hanger 9 P51D"
 
+menu: aircraft
 ---
 
 ## Specs:

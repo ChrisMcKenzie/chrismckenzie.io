@@ -16,8 +16,10 @@
     <div class="sub-content">
       <h2>Hobbies</h2>
       <div class="highlights">
-      {{ range where .Data.Pages "Section" "aircraft" }}
-      <div class="block">{{ .Render "summary" }}</div>
+      {{ range .Site.Menus.aircraft }}
+        {{with .Page}}
+        <div class="block">{{ .Render "summary" }}</div>
+        {{ end }}
       {{ end }}
       </div>
     </div>

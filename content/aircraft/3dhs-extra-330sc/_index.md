@@ -5,6 +5,8 @@ categories:
 tags:
   - 3d
 
+pages_title: Flight Log
+
 images: 
   - src: http://share.chrismckenzie.io/E330SC_1.gif
     hero: true
@@ -16,6 +18,7 @@ image: http://share.chrismckenzie.io/E330SC_1.gif
 
 title: "3D Hobby Shop Extra 330SC"
 
+menu: aircraft
 ---
 
 ## Specs
