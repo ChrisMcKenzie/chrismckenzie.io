@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://chrismckenzie.io/projects/suburban/posts/out_with_the_old/</loc>
+    <lastmod>2018-03-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://chrismckenzie.io/posts/deploy-anything/</loc>
     <lastmod>2015-11-17T00:00:00+00:00</lastmod>
   </url>
@@ -38,7 +43,6 @@
   
   <url>
     <loc>http://chrismckenzie.io/aircraft/</loc>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -48,7 +52,7 @@
   
   <url>
     <loc>http://chrismckenzie.io/</loc>
-    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
+    <lastmod>2018-03-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -113,12 +117,6 @@
   
   <url>
     <loc>http://chrismckenzie.io/projects/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://chrismckenzie.io/categories/projects/</loc>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -128,7 +126,8 @@
   </url>
   
   <url>
-    <loc>http://chrismckenzie.io/projects/subourban/</loc>
+    <loc>http://chrismckenzie.io/projects/suburban/</loc>
+    <lastmod>2018-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
