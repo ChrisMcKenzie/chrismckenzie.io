@@ -12,15 +12,17 @@
       {{ partial "post.html" . }}
     {{ end }}
 
+    {{ $pages := (union .Pages .Sections)}}
+    {{if $pages }}
     <section>
       <div>
         <h3 class="title">{{ .Params.pages_title }}</h3>
       </div>
-      {{ $pages := (union .Pages .Sections)}}
       {{ range $pages }}
         {{ .Render "summary" }}
       {{ end }}
     </section>
+    {{end}}
 
     {{ partial "footer.html" . }}
 
