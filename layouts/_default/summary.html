@@ -1,5 +1,5 @@
 <a href="{{ .Permalink }}">
-  <div class="hero" style="background-image:url({{ .Params.image }}); background-position: {{ .Params.image_position | default "Roboto"}};">
+  <div class="hero" {{ if isset .Params "image" }}style="background-image:url({{ .Params.image }}); background-position: {{ .Params.image_position | default "Roboto"}};" {{end}}>
     <div class="title">
       {{ .Title }}
       {{if not .Date.IsZero }}<span>{{.Date.Format "Jan 2, 2006"}}</span>{{end}}
