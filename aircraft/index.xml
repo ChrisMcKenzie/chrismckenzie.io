@@ -10,32 +10,5 @@
 	<atom:link href="http://chrismckenzie.io/aircraft/index.xml" rel="self" type="application/rss+xml" />
     
     
-    <item>
-      <title>3D Hobby Shop Extra 330SC</title>
-      <link>http://chrismckenzie.io/aircraft/3dhs-extra-330sc/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrismckenzie.io/aircraft/3dhs-extra-330sc/</guid>
-      <description>Specs Wingspan: 72 in (182.88 cm)
-Overall Length: 69 in (175.26)
-Wing Area: 1000 sq. in. (64.516 sq. dm.)
-Flying Weight: 9.5 lb (4.3 kg)</description>
-    </item>
-    
-    <item>
-      <title>Hanger 9 P51D</title>
-      <link>http://chrismckenzie.io/aircraft/h9-p51/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrismckenzie.io/aircraft/h9-p51/</guid>
-      <description> Specs: Wingspan: 89.0 in (226 cm)
-Overall Length: 77.5 in (197 cm)
-Wing Area: 1420 sq. in. (96.1 sq. dm.)
-Flying Weight: 26.0-28.5 lb (11.8-13.0 kg)
-Engine: DA 60cc
-Radio: Spektrum AR12020 12-Channel DSMX/XPlus Receiver
-Links  Kit: Hanger 9 P51D Receiver: Spektrum AR12020 12-Channel DSMX/XPlus Receiver  </description>
-    </item>
-    
   </channel>
 </rss>
