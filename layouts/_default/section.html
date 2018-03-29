@@ -14,7 +14,7 @@
 
     <section>
       <div>
-        <h3 class="title">Build Log</h3>
+        <h3 class="title">{{ .Params.pages_title }}</h3>
       </div>
       {{ $pages := (union .Pages .Sections)}}
       {{ range $pages }}

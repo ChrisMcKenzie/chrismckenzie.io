@@ -2,6 +2,9 @@
 title: Suburban
 
 hidedate: true
+disable_comments: true
+pages_title: Build Log
+
 images:
   - src: http://share.chrismckenzie.io/truck.jpg
     hero: true
