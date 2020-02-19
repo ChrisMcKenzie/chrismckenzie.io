@@ -6,10 +6,10 @@ disable_comments: true
 pages_title: Build Log
 
 images:
-  - src: http://share.chrismckenzie.io/truck.jpg
+  - src: /assets/truck.jpg
     hero: true
 
-image: http://share.chrismckenzie.io/truck.jpg
+image: /assets/truck.jpg
 
 tagline: Overland Vehicle
 color: "#564334"

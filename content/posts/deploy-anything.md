@@ -6,7 +6,6 @@ tags:
   - dropship
 comments: true
 date: '2015-11-17'
-image: http://share.chrismckenzie.io/49be1f4a.gif
 ---
 
 So it has been a while since I last touched on the problem of deploying software 

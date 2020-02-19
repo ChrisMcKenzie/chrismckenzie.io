@@ -14,11 +14,11 @@
     </div>
 
     <div class="sub-content">
-      <h2>Hobbies</h2>
-      <div class="highlights">
-      {{ range .Site.Menus.aircraft }}
+      <h2>Projects</h2>
+      <div class="sub-content">
+      {{ range .Site.Menus.projects }}
         {{with .Page}}
-        <div class="block">{{ .Render "summary" }}</div>
+        {{ .Render "summary" }}
         {{ end }}
       {{ end }}
       </div>

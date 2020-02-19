@@ -21,6 +21,7 @@ image: http://share.chrismckenzie.io/p51.jpg
 title: "Hanger 9 P51D"
 
 menu: aircraft
+draft: true
 ---
 
 ## Specs:

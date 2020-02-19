@@ -19,6 +19,7 @@ image: http://share.chrismckenzie.io/E330SC_1.gif
 title: "3D Hobby Shop Extra 330SC"
 
 menu: aircraft
+draft: true
 ---
 
 ## Specs
