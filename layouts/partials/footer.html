@@ -49,6 +49,11 @@
       <button class="github"><i class="icon-github-alt"></i></button>
     </a>
     {{ end }}
+    {{ if isset .Site.Params "instagram_username" }}
+    <a href="https://www.instagram.com/{{ .Site.Params.instagram_username }}">
+      <button class="instagram"><i class="icon-instagram"></i></button>
+    </a>
+    {{ end }}
   </div>
 
   <div class="center">

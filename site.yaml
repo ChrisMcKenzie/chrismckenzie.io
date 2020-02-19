@@ -18,6 +18,7 @@ canonifyurls: true
 params:
   twitter_username: TopherMcK
   github_username:  ChrisMcKenzie
+  instagram_username: hobby_hobbiest
   google_userid: 112997148822003661332
   facebook_username: cmckenzie13
   description_title: A little about me
