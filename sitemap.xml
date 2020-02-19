@@ -23,24 +23,6 @@
   </url>
   
   <url>
-    <loc>http://chrismckenzie.io/aircraft/3dhs-extra-330sc/</loc>
-  </url>
-  
-  <url>
-    <loc>http://chrismckenzie.io/tags/3d/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://chrismckenzie.io/categories/aircraft/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://chrismckenzie.io/aircraft/</loc>
-  </url>
-  
-  <url>
     <loc>http://chrismckenzie.io/categories/</loc>
     <priority>0</priority>
   </url>
@@ -86,15 +68,6 @@
   </url>
   
   <url>
-    <loc>http://chrismckenzie.io/aircraft/h9-p51/</loc>
-  </url>
-  
-  <url>
-    <loc>http://chrismckenzie.io/tags/large-scale/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://chrismckenzie.io/tags/makefile/</loc>
     <lastmod>2015-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -126,11 +99,6 @@
   <url>
     <loc>http://chrismckenzie.io/tags/</loc>
     <lastmod>2015-11-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://chrismckenzie.io/tags/warbird/</loc>
     <priority>0</priority>
   </url>
   
