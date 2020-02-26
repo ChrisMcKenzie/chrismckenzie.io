@@ -3,9 +3,7 @@ title: A little tuneup
 type: post
 color: "#564334"
 
-draft: true
-
-date: '2018-03-28'
+date: '2020-02-26'
 
 image: /assets/k5_tuneup.jpg
 images:
