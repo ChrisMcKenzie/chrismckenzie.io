@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Christopher McKenzie</title>
-    <link>http://chrismckenzie.io/posts/</link>
+    <link>https://chrismckenzie.io/posts/</link>
     <description>Recent content in Posts on Christopher McKenzie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 17 Nov 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://chrismckenzie.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chrismckenzie.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Deploying Anything with Dropship</title>
-      <link>http://chrismckenzie.io/posts/deploy-anything/</link>
+      <link>https://chrismckenzie.io/posts/deploy-anything/</link>
       <pubDate>Tue, 17 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://chrismckenzie.io/posts/deploy-anything/</guid>
+      <guid>https://chrismckenzie.io/posts/deploy-anything/</guid>
       <description>So it has been a while since I last touched on the problem of deploying software to a server, with that being said I have had a chance to really dig in and find a solution that is flexible as well as simple for developers to setup.
 The Idea So when I started down this path of finding a clean deployment flow for my company (The Control Group) I had a few requirements It had to work for all of the different types of applications and languages that we build; I also did not want to use web hooks they are just too clunky and you have to have a server that is accesible on the internet so it can be called (not really a fan); The last thing that I wanted to be able to do is to deploy multiple versions of an application.</description>
     </item>
     
     <item>
       <title>Deploying with Go</title>
-      <link>http://chrismckenzie.io/posts/deploying-with-golang/</link>
+      <link>https://chrismckenzie.io/posts/deploying-with-golang/</link>
       <pubDate>Mon, 23 Feb 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://chrismckenzie.io/posts/deploying-with-golang/</guid>
+      <guid>https://chrismckenzie.io/posts/deploying-with-golang/</guid>
       <description>Recently I have been building a lot of go applications, and I think I have come up with a good pattern for building an app that is ready for deployment to either a server or to users. This includes build/run for development, testing, dependency management, and packaging. While this process is still being actively developed I believe it is at a state in which to share.
 The Structure I keep a very simple structure for my projects and it is as follows.</description>
     </item>
