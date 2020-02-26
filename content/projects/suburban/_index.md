@@ -1,5 +1,5 @@
 ---
-title: Suburban
+title: 1990 V2500 Suburban
 
 hidedate: true
 disable_comments: true
