@@ -4,6 +4,8 @@ link: https://varunksaini.com
 
 tagline: varunksaini.com 
 
+draft: true
+
 hidedate: true
 disable_comments: true
 
