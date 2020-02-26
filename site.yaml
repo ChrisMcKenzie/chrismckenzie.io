@@ -1,7 +1,7 @@
 ---
 # Site settings
 title: Christopher McKenzie
-baseurl: http://chrismckenzie.io/
+baseurl: https://chrismckenzie.io/
 email: chris@chrismckenzie.io
 languageCode: en-us
 metaDataFormat: yaml

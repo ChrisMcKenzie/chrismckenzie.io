@@ -390,6 +390,8 @@ footer .right { width: calc(50% - 10px); float: right; margin-left: 10px; }
 
 footer ul { list-style: none; margin-left: 0; }
 
+footer .about {margin-bottom: 30px;}
+
 .foot { text-align: center; clear: both; }
 
 /*=========={ SOCIAL }==========*/
@@ -423,7 +425,7 @@ button.github:hover { background: #f9f9f9; color: #333; }
   section.quote p { font-size: 20px; line-height: 32px; }
   section.quote p .author { margin-top: 10px; }
   footer { padding: 0 25px; margin-top: 50px; margin-bottom: 20px; }
-  footer .left, footer .right { float: none; display: block; width: 100%; margin-left: 0; margin-right: 0; text-align: center; }
+  footer .left, footer .center, footer .right { float: none; display: block; width: 100%; margin-left: 0; margin-right: 0; text-align: center; }
   .foot { width: 100%; /* margin: 10px; */ margin-top: 20px; margin-bottom: 10px; text-align: center; } }
 @media only screen and (min-width: 768px) { header nav { display: block !important; } }
 /** Syntax highlighting styles */

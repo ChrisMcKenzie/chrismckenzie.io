@@ -1,5 +1,5 @@
 <footer>
-  <div class="left">
+  <div class="about foot">
   {{ if isset .Site.Params "description_title" }}
     <h5>{{ .Site.Params.description_title }}</h5>
   {{ end }}
@@ -7,10 +7,32 @@
     {{ .Site.Params.description | markdownify }}
   {{ end }}
   </div>
-  <div class="right">
+
+  <div class="left">
     <h5>Projects</h5>
     <ul>
     {{ range .Site.Menus.projects }}
+      {{with .Page}}
+      <li {{if isset .Params "color"}}style="color: {{.Params.color}};" {{end}}>
+        {{ if isset .Params "link" }}
+          <a href="{{ .Params.link }}">
+            {{ .Title}}
+          </a>
+        {{ else }}
+          <a href="{{ .Permalink }}">
+            {{ .Title}}
+          </a>
+        {{ end }}
+        <small>{{ .Params.tagline }}</small>
+      </li>
+      {{end}}
+    {{ end }}
+    </ul>
+  </div>
+  <div class="right">
+    <h5><a href="/colleagues">Colleagues</a></h5>
+    <ul>
+    {{ range .Site.Menus.colleagues }}
       {{with .Page}}
       <li {{if isset .Params "color"}}style="color: {{.Params.color}};" {{end}}>
         {{ if isset .Params "link" }}

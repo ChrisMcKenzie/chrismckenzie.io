@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Deploying Anything with Dropship</title>
+    <title>Varun Kumar</title>
     <meta name="description" content="">
 
-    <link rel="canonical" href="https://chrismckenzie.io/posts/deploy-anything/">
+    <link rel="canonical" href="https://chrismckenzie.io/colleagues/varun/">
 
     
     <link rel="stylesheet" href="https://chrismckenzie.io/css/main.css">
@@ -62,131 +62,32 @@
     <section class="post">
       <div>
         <div class="title">
-          <a href="https://chrismckenzie.io/posts/deploy-anything/">Deploying Anything with Dropship</a>
-          <span class="date">Nov 17, 2015</span>
+          <a href="https://chrismckenzie.io/colleagues/varun/">Varun Kumar</a>
+          <span class="date">Jan 1, 0001</span>
         </div>
 
         <div class="hashtags">
-          
-            <a class="hashtag">deployment</a>
-          
-            <a class="hashtag">golang</a>
-          
-            <a class="hashtag">dropship</a>
           
         </div>
       </div>
       <div class="content">
         
-
-<p>So it has been a while since I last touched on the problem of deploying software
-to a server, with that being said I have had a chance to really dig in and
-find a solution that is flexible as well as simple for developers to setup.</p>
-
-<h2 id="the-idea">The Idea</h2>
-
-<p>So when I started down this path of finding a clean deployment flow for my
-company (<a href="http://thecontrolgroup.com">The Control Group</a>) I had a few requirements It had to work for all of
-the different types of applications and languages that we build; I also did not
-want to use web hooks they are just too clunky and you have to have a server that
-is accesible on the internet so it can be called (not really a fan); The last thing
-that I wanted to be able to do is to deploy multiple versions of an application.</p>
-
-<h2 id="artifacts">Artifacts</h2>
-
-<p>Another part of this system is the need for storing build artifacts in our case
-tarballs containing all of the files need to run the system. for this I chose
-rackspace <a href="http://www.rackspace.com/cloud/files">Cloud Files</a>, but Amazons <a href="https://aws.amazon.com/s3/">S3</a> would work just as well. it simply needs
-to store our build artifacts for later downloading on to our server.</p>
-
-<h2 id="i-built-a-tool">I built a tool!!!</h2>
-
-<p>So now for the shameless plug! At first I implemented this system with a pretty
-unwieldy bash script, and quickly realized if anyone else is going to use this
-it needs to be simple to setup. With that I introduce <a href="https://github.com/chrismckenzie/dropship">Dropship</a>! Dropship is
-a tool that is installed on your servers along with a simple configuration file
-telling it where to get your artifact and how to install it as well being able
-to sequentially update multiple servers.</p>
-
-<p>Dropship uses md5sums to check freshness of your artifact comparing the one that
-is installed with the sum of file on the artifact repo, it will then repeat this
-process on the configured interval and if the sums do not match it will then start
-the update process (pretty simple eh).</p>
-
-<p>A <a href="https://github.com/chrismckenzie/dropship">Dropship</a> config is and HCL file like the following:</p>
-
-<pre><code># vim: set ft=hcl :
-service &quot;my-service&quot; {
-  # Use a semaphore to update one machine at a time
-  sequentialUpdates = true
-
-  # Check for updates every 10s
-  checkInterval = &quot;10s&quot;
-
-  # Run this command before update starts
-  before &quot;script&quot; {
-    command = &quot;initctl my-service stop&quot;
-  }
-
-  # Artifact defines what repository to use (rackspace) and where 
-  # your artifact live on that repository
-  artifact &quot;s3&quot; {
-    bucket = &quot;my-s3bucket&quot;
-    path = &quot;my-service.tar.gz&quot;
-    destination = &quot;./test/dest&quot;
-  }
-
-  # After successful update send an event to graphite
-  # this allows you to show deploy annotations in tools like grafana
-  # 
-  # The graphite hook will automatically add this services name into the 
-  # graphite tags. You also have access to all of the services meta data
-  # like Name, &quot;current hash&quot;, hostname.
-  after &quot;graphite-event&quot; {
-    host = &quot;http://&lt;my-graphite-server&gt;&quot;
-    tags = &quot;deployment&quot;
-    what = &quot;deployed to {{.Name}} on {{.Hostname}}&quot;
-    data = &quot;{{.Hash}}&quot;
-  }
-
-  # Run this command after the update finishes
-  after &quot;script&quot; {
-    command = &quot;initctl my-service start&quot;
-  }
-}
-</code></pre>
-
-<p>As you can see there are a bunch of options available for installing your system,
-you can set hooks that will be called <code>before</code> and <code>after</code> your artifact is installed.</p>
-
-<p>Hooks are a very interesting feature and I have implemented a few helpful hooks
-to start with but hope to add many more. One hook worth mentioning is the
-<code>graphite-event</code> hook this will create an event in graphite which can be viewed as
-a pretty annotation on your graphs in grafana for example, you can then see how
-your latest deployment affected your stats.</p>
-
-<p>Currently this is available as a Debian package and can be installed by following
-the guide <a href="https://github.com/ChrisMcKenzie/dropship#installation">here</a>.</p>
-
-<p>Please let me know what you think of this project in the comments. And feel free
-to file issues and feature requests <a href="https://github.com/ChrisMcKenzie/dropship/issues">here</a></p>
-
       </div>
       <div class="share-page">
     Share this on &rarr; 
-    <a href="https://twitter.com/intent/tweet?text=check out this post on Deploying%20Anything%20with%20Dropship&url=https%3a%2f%2fchrismckenzie.io%2fposts%2fdeploy-anything%2f&via=TopherMcK&related=TopherMcK" 
+    <a href="https://twitter.com/intent/tweet?text=check out this post on Varun%20Kumar&url=https%3a%2f%2fchrismckenzie.io%2fcolleagues%2fvarun%2f&via=TopherMcK&related=TopherMcK" 
        rel="nofollow" 
        target="_blank" 
        title="Share on Twitter">
       <button class="twitter"><i class="icon-twitter"></i></button>
     </a>
-    <a href="https://facebook.com/sharer.php?u=https%3a%2f%2fchrismckenzie.io%2fposts%2fdeploy-anything%2f" 
+    <a href="https://facebook.com/sharer.php?u=https%3a%2f%2fchrismckenzie.io%2fcolleagues%2fvarun%2f" 
        rel="nofollow" 
        target="_blank" 
        title="Share on Facebook">
       <button class="facebook"><i class="icon-facebook"></i></button>
     </a>
-    <a href="https://plus.google.com/share?url=https%3a%2f%2fchrismckenzie.io%2fposts%2fdeploy-anything%2f" 
+    <a href="https://plus.google.com/share?url=https%3a%2f%2fchrismckenzie.io%2fcolleagues%2fvarun%2f" 
        rel="nofollow" 
        target="_blank" 
        title="Share on Google+">
