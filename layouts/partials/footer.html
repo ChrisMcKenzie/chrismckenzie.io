@@ -51,11 +51,6 @@
     </ul>
   </div>
   <div class="foot">
-    {{ if isset .Site.Params "google_userid" }}
-    <a href="https://plus.google.com/{{ .Site.Params.google_userid }}">
-      <button class="google-plus"><i class="icon-google-plus"></i></button>
-    </a>
-    {{ end }}
     {{ if isset .Site.Params "facebook_username" }}
     <a href="https://www.facebook.com/{{ .Site.Params.facebook_username }}">
       <button class="facebook"><i class="icon-facebook"></i></button>
