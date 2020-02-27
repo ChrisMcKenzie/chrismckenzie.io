@@ -53,22 +53,27 @@
   <div class="foot">
     {{ if isset .Site.Params "facebook_username" }}
     <a href="https://www.facebook.com/{{ .Site.Params.facebook_username }}">
-      <button class="facebook"><i class="icon-facebook"></i></button>
+      <button class="facebook"><i class="fab fa-facebook"></i></button>
     </a>
     {{ end }}
     {{ if isset .Site.Params "twitter_username" }}
     <a href="https://twitter.com/{{ .Site.Params.twitter_username }}">
-      <button class="twitter"><i class="icon-twitter"></i></button>
+      <button class="twitter"><i class="fab fa-twitter"></i></button>
     </a>
     {{ end }}
     {{ if isset .Site.Params "github_username" }}
     <a href="https://github.com/{{ .Site.Params.github_username }}">
-      <button class="github"><i class="icon-github-alt"></i></button>
+      <button class="github"><i class="fab fa-github"></i></button>
     </a>
     {{ end }}
     {{ if isset .Site.Params "instagram_username" }}
     <a href="https://www.instagram.com/{{ .Site.Params.instagram_username }}">
-      <button class="instagram"><i class="icon-instagram"></i></button>
+      <button class="instagram"><i class="fab fa-instagram"></i></button>
+    </a>
+    {{ end }}
+    {{ if isset .Site.Params "stackoverflow_username" }}
+    <a href="{{ .Site.Params.stackoverflow_username }}">
+      <button class="stackoverflow"><i class="fab fa-stack-overflow"></i></button>
     </a>
     {{ end }}
   </div>
