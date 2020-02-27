@@ -417,6 +417,8 @@ button.stackoverflow { background: #ff6600; color: #fff; }
 
 button.github { background: #f3f3f3; color: #333; }
 
+button.youtube { background: #cd201f; color: #fff; }
+
 button.github:hover { background: #f9f9f9; color: #333; }
 
 /*=========={ MEDIA QUERIES }==========*/

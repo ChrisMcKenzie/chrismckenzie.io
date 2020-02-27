@@ -76,6 +76,11 @@
       <button class="stackoverflow"><i class="fab fa-stack-overflow"></i></button>
     </a>
     {{ end }}
+    {{ if isset .Site.Params "youtube_username" }}
+    <a href="https://www.youtube.com/channel/{{ .Site.Params.youtube_username }}">
+      <button class="youtube"><i class="fab fa-youtube"></i></button>
+    </a>
+    {{ end }}
   </div>
 
   <div class="center">
