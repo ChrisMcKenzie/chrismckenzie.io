@@ -1,6 +1,7 @@
 ---
 
 title: "Configuration Management"
+type: "post"
 tags:
   - devops
   - golang

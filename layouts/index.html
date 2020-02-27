@@ -8,7 +8,7 @@
     {{ partial "header.html" . }}
 
     <div class="sub-content">
-    {{ range where .Pages "Section" "posts" }}
+    {{range ( where .Data.Pages "Type" "post")}} 
       {{ .Render "summary" }}
     {{ end }}
     </div>

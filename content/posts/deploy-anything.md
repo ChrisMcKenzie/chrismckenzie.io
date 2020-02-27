@@ -1,5 +1,6 @@
 ---
 title: "Deploying Anything with Dropship"
+type: "post"
 tags:
   - deployment
   - golang

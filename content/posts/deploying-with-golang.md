@@ -1,5 +1,6 @@
 ---
 title: Deploying with Go
+type: "post"
 tags:  
   - Golang 
   - Deployment 

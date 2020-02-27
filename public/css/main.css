@@ -327,6 +327,8 @@ section {width: auto; max-width: 860px; margin: 0 auto; margin-bottom: 20px;-web
 
 .hero .title small { font-size: 11px; }
 
+.hero .hashtags a { margin-left: 2px; margin-right: 2px; padding: 5px; background-color: rgba(255, 102, 68, 0.75); color: #fff;}
+
 .post-image:hover { text-decoration: none; }
 
 .post-image { margin-bottom: -10px; }

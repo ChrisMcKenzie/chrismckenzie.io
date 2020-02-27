@@ -1,5 +1,6 @@
 ---
 title: "Consumer Contract Testing"
+type: "post"
 tags:
   - testing
   - golang
