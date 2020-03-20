@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Christopher McKenzie</title>
@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Christopher McKenzie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2015 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://chrismckenzie.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Staying Effective while Working Remotely</title>
+      <link>https://chrismckenzie.io/posts/working-remotely/</link>
+      <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chrismckenzie.io/posts/working-remotely/</guid>
+      <description>This post is meant to be a guide for people who are new to working 100% remote and provide some tips and tricks for staying effective. At this point I have been working 100% remote for 3 years and I honestly can say I love it! But it wasn&amp;rsquo;t always that way.
+1. Find your focus spot I have found that my office is not always the place in my house that allows me to focus best, I highly recommend experimenting and moving to different spots around your house.</description>
+    </item>
     
     <item>
       <title>Deploying Anything with Dropship</title>

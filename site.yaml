@@ -16,6 +16,7 @@ disqusShortname: "chrismckenzieio"
 watch: true
 canonifyurls: true
 params:
+  mainSections: ['posts']
   twitter_username: TopherMcK
   github_username:  ChrisMcKenzie
   instagram_username: hobby_hobbiest

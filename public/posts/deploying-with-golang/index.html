@@ -36,8 +36,6 @@
             
           
             
-          
-            
             <li><a class="sidebar-nav-item" href="https://chrismckenzie.io/posts/" title="Posts">Posts</a></li>
             
           
@@ -45,6 +43,8 @@
           
             
             <li><a class="sidebar-nav-item" href="https://chrismckenzie.io/projects/" title="Projects">Projects</a></li>
+            
+          
             
           
             
@@ -83,20 +83,14 @@
         </div>
       </div>
       <div class="content">
-        
-
-<p>Recently I have been building a lot of go applications, and I think I have
+        <p>Recently I have been building a lot of go applications, and I think I have
 come up with a good pattern for building an app that is ready for deployment
 to either a server or to users. This includes build/run for development, testing,
 dependency management, and packaging. While this process is still being actively developed I believe it is at a
 state in which to share.</p>
-
-<!-- more -->
-
+<!-- raw HTML omitted -->
 <h2 id="the-structure">The Structure</h2>
-
 <p>I keep a very simple structure for my projects and it is as follows.</p>
-
 <pre><code>  |- my-project
     |- bin/     # place to store binaries (in .gitignore)
     |- dist/    # place to store packaged apps (in .gitignore)
@@ -105,144 +99,132 @@ state in which to share.</p>
     |- Makefile
     |- main.go
     |- wercker.yml
-</code></pre>
-
-<h2 id="the-makefile">The Makefile</h2>
-
+</code></pre><h2 id="the-makefile">The Makefile</h2>
 <p>The meat and potatoes of this workflow starts with the <code>Makefile</code> for those
 who don&rsquo;t know <a href="http://en.wikipedia.org/wiki/Make_%28software%29"><code>make</code></a>
 is a build system. Make allows us to download dependencies, keep version,
 as well build and package.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-make" data-lang="make"><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> version all run dist clean
+APP_NAME <span style="color:#f92672">:=</span> my-project
+SHA <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>shell git rev-parse --short HEAD<span style="color:#66d9ef">)</span>
+BRANCH <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>subst /,-,<span style="color:#66d9ef">$(</span>shell git rev-parse --abbrev-ref HEAD<span style="color:#66d9ef">))</span>
+VER <span style="color:#f92672">:=</span> 0.0.1
+DIR<span style="color:#f92672">=</span>.
 
-<pre><code class="language-make">.PHONY: version all run dist clean
-APP_NAME := my-project
-SHA := $(shell git rev-parse --short HEAD)
-BRANCH := $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
-VER := 0.0.1
-DIR=.
+<span style="color:#960050;background-color:#1e0010">ifdef</span> <span style="color:#960050;background-color:#1e0010">WERCKER_OUTPUT_DIR</span> 
+  DIR <span style="color:#f92672">=</span> <span style="color:#66d9ef">$(</span>WERCKER_OUTPUT_DIR<span style="color:#66d9ef">)</span>
+<span style="color:#960050;background-color:#1e0010">endif</span>
 
-ifdef WERCKER_OUTPUT_DIR 
-  DIR = $(WERCKER_OUTPUT_DIR)
-endif
+<span style="color:#960050;background-color:#1e0010">ifdef</span> <span style="color:#960050;background-color:#1e0010">APP_SUFFIX</span>
+  VERSION <span style="color:#f92672">=</span> <span style="color:#66d9ef">$(</span>VER<span style="color:#66d9ef">)</span>-<span style="color:#66d9ef">$(</span>subst /,-,<span style="color:#66d9ef">$(</span>APP_SUFFIX<span style="color:#66d9ef">))</span>
+<span style="color:#960050;background-color:#1e0010">else</span> 
+  VERSION <span style="color:#f92672">=</span> <span style="color:#66d9ef">$(</span>VER<span style="color:#66d9ef">)</span>-<span style="color:#66d9ef">$(</span>BRANCH<span style="color:#66d9ef">)</span>
+<span style="color:#960050;background-color:#1e0010">endif</span>
 
-ifdef APP_SUFFIX
-  VERSION = $(VER)-$(subst /,-,$(APP_SUFFIX))
-else 
-  VERSION = $(VER)-$(BRANCH)
-endif
+BUILD <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>SHA<span style="color:#66d9ef">)</span>-<span style="color:#66d9ef">$(</span>BRANCH<span style="color:#66d9ef">)</span>
 
-BUILD := $(SHA)-$(BRANCH)
+<span style="color:#75715e"># Go setup
+</span><span style="color:#75715e"></span>GO<span style="color:#f92672">=</span>go
+TEST<span style="color:#f92672">=</span>go test
+GOPATH <span style="color:#f92672">:=</span> <span style="color:#e6db74">${</span>PWD<span style="color:#e6db74">}</span>/_vendor:<span style="color:#e6db74">${</span>GOPATH<span style="color:#e6db74">}</span>
+<span style="color:#66d9ef">export</span> GOPATH
 
-# Go setup
-GO=go
-TEST=go test
-GOPATH := ${PWD}/_vendor:${GOPATH}
-export GOPATH
+DEPENDENCIES <span style="color:#f92672">:=</span> github.com/gin-gonic/gin <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>                github.com/dancannon/gorethink
 
-DEPENDENCIES := github.com/gin-gonic/gin \
-                github.com/dancannon/gorethink
+<span style="color:#75715e"># Sources and Targets
+</span><span style="color:#75715e"></span>EXECUTABLES <span style="color:#f92672">:=</span>bin/<span style="color:#66d9ef">$(</span>APP_NAME<span style="color:#66d9ef">)</span>
+<span style="color:#75715e"># Build Binaries setting main.version and main.build vars
+</span><span style="color:#75715e"></span>LDFLAGS <span style="color:#f92672">:=</span>-ldflags <span style="color:#e6db74">&#34;-X main.version </span><span style="color:#66d9ef">$(</span>VERSION<span style="color:#66d9ef">)</span><span style="color:#e6db74"> -X main.build </span><span style="color:#66d9ef">$(</span>BUILD<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#75715e"># Package target
+</span><span style="color:#75715e"></span>PACKAGE <span style="color:#f92672">:=</span><span style="color:#66d9ef">$(</span>DIR<span style="color:#66d9ef">)</span>/dist/<span style="color:#66d9ef">$(</span>APP_NAME<span style="color:#66d9ef">)</span>-<span style="color:#66d9ef">$(</span>VERSION<span style="color:#66d9ef">)</span>.tar.gz
 
-# Sources and Targets
-EXECUTABLES :=bin/$(APP_NAME)
-# Build Binaries setting main.version and main.build vars
-LDFLAGS :=-ldflags &quot;-X main.version $(VERSION) -X main.build $(BUILD)&quot;
-# Package target
-PACKAGE :=$(DIR)/dist/$(APP_NAME)-$(VERSION).tar.gz
+<span style="color:#75715e"># Custom go path for project
+</span><span style="color:#75715e"></span>VENDOR_DIR <span style="color:#f92672">:=</span>_vendor/src
+DEPENDENCIES_DIR <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>addprefix <span style="color:#66d9ef">$(</span>VENDOR_DIR<span style="color:#66d9ef">)</span>,<span style="color:#66d9ef">$(</span>DEPENDENCIES<span style="color:#66d9ef">))</span>
 
-# Custom go path for project
-VENDOR_DIR :=_vendor/src
-DEPENDENCIES_DIR := $(addprefix $(VENDOR_DIR),$(DEPENDENCIES))
+<span style="color:#a6e22e">.DEFAULT</span><span style="color:#f92672">:</span> all
 
-.DEFAULT: all
+<span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> | <span style="color:#66d9ef">$(</span>EXECUTABLES<span style="color:#66d9ef">)</span>
 
-all: | $(EXECUTABLES)
+<span style="color:#75715e"># print the version
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">version</span><span style="color:#f92672">:</span>
+  @echo <span style="color:#66d9ef">$(</span>VERSION<span style="color:#66d9ef">)</span>
+<span style="color:#75715e"># print the name of the app
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">name</span><span style="color:#f92672">:</span>
+  @echo <span style="color:#66d9ef">$(</span>APP_NAME<span style="color:#66d9ef">)</span>
 
-# print the version
-version:
-  @echo $(VERSION)
-# print the name of the app
-name:
-  @echo $(APP_NAME)
+<span style="color:#75715e"># print the package path
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">package</span><span style="color:#f92672">:</span>
+  @echo <span style="color:#66d9ef">$(</span>PACKAGE<span style="color:#66d9ef">)</span>
 
-# print the package path
-package:
-  @echo $(PACKAGE)
+<span style="color:#75715e"># We have to set GOPATH to just the _vendor
+</span><span style="color:#75715e"># directory to ensure that `go get` doesn&#39;t
+</span><span style="color:#75715e"># update packages in our primary GOPATH instead.
+</span><span style="color:#75715e"># This will happen if you already have the package
+</span><span style="color:#75715e"># installed in GOPATH since `go get` will use
+</span><span style="color:#75715e"># that existing location as the destination.
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$(DEPENDENCIES_DIR)</span><span style="color:#f92672">:</span>
+  @echo Downloading <span style="color:#66d9ef">$(</span>@:<span style="color:#66d9ef">$(</span>VENDOR_DIR<span style="color:#66d9ef">)</span>%<span style="color:#f92672">=</span>%<span style="color:#66d9ef">)</span>...
+  @GOPATH<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>PWD<span style="color:#e6db74">}</span>/_vendor go get <span style="color:#66d9ef">$(</span>@:<span style="color:#66d9ef">$(</span>VENDOR_DIR<span style="color:#66d9ef">)</span>%<span style="color:#f92672">=</span>%<span style="color:#66d9ef">)</span>
 
-# We have to set GOPATH to just the _vendor
-# directory to ensure that `go get` doesn't
-# update packages in our primary GOPATH instead.
-# This will happen if you already have the package
-# installed in GOPATH since `go get` will use
-# that existing location as the destination.
-$(DEPENDENCIES_DIR):
-  @echo Downloading $(@:$(VENDOR_DIR)%=%)...
-  @GOPATH=${PWD}/_vendor go get $(@:$(VENDOR_DIR)%=%)
+<span style="color:#75715e"># This defines the req&#39;s for each binary
+</span><span style="color:#75715e"># if you only have one then these can be placed under
+</span><span style="color:#75715e"># $(EXECUTABLES): Target
+</span><span style="color:#75715e"># you must define the main file for each binary that will
+</span><span style="color:#75715e"># be placed in bin.
+</span><span style="color:#75715e"># For Example:
+</span><span style="color:#75715e"># -----------
+</span><span style="color:#75715e"># binary #1
+</span><span style="color:#75715e"># bin/$(APP_NAME): main.go pkg/* $(DEPENDENCIES_DIR)
+</span><span style="color:#75715e"># binary #2
+</span><span style="color:#75715e"># bin/my_other_bin: other.go pkg/* $(DEPENDENCIES_DIR)
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">bin/$(APP_NAME)</span><span style="color:#f92672">:</span> main.go <span style="color:#66d9ef">$(</span>DEPENDENCIES_DIR<span style="color:#66d9ef">)</span> 
 
-# This defines the req's for each binary
-# if you only have one then these can be placed under
-# $(EXECUTABLES): Target
-# you must define the main file for each binary that will
-# be placed in bin.
-# For Example:
-# -----------
-# binary #1
-# bin/$(APP_NAME): main.go pkg/* $(DEPENDENCIES_DIR)
-# binary #2
-# bin/my_other_bin: other.go pkg/* $(DEPENDENCIES_DIR)
-bin/$(APP_NAME): main.go $(DEPENDENCIES_DIR) 
+<span style="color:#a6e22e">$(EXECUTABLES)</span><span style="color:#f92672">:</span> 
+  <span style="color:#66d9ef">$(</span>GO<span style="color:#66d9ef">)</span> build <span style="color:#66d9ef">$(</span>LDFLAGS<span style="color:#66d9ef">)</span> -o $@ $&lt;
 
-$(EXECUTABLES): 
-  $(GO) build $(LDFLAGS) -o $@ $&lt;
+<span style="color:#a6e22e">run</span><span style="color:#f92672">:</span> bin/<span style="color:#66d9ef">$(</span>APP_NAME<span style="color:#66d9ef">)</span>
+  bin/<span style="color:#66d9ef">$(</span>APP_NAME<span style="color:#66d9ef">)</span>
 
-run: bin/$(APP_NAME)
-  bin/$(APP_NAME)
+<span style="color:#a6e22e">test</span><span style="color:#f92672">:</span> 
+  <span style="color:#66d9ef">$(</span>TEST<span style="color:#66d9ef">)</span> -r -cover
 
-test: 
-  $(TEST) -r -cover
-
-clean:
+<span style="color:#a6e22e">clean</span><span style="color:#f92672">:</span>
   @echo Cleaning Workspace...
   rm -dRf _vendor
   rm -dRf bin
   rm -dRf dist
 
-$(PACKAGE): all
+<span style="color:#a6e22e">$(PACKAGE)</span><span style="color:#f92672">:</span> all
   @echo Packaging Binaries...
-  @mkdir -p tmp/$(APP_NAME)/bin
-  @cp -R bin/ tmp/$(APP_NAME)/
-  @mkdir -p $(DIR)/dist/
-  tar -cf $@ -C tmp $(APP_NAME);
+  @mkdir -p tmp/<span style="color:#66d9ef">$(</span>APP_NAME<span style="color:#66d9ef">)</span>/bin
+  @cp -R bin/ tmp/<span style="color:#66d9ef">$(</span>APP_NAME<span style="color:#66d9ef">)</span>/
+  @mkdir -p <span style="color:#66d9ef">$(</span>DIR<span style="color:#66d9ef">)</span>/dist/
+  tar -cf $@ -C tmp <span style="color:#66d9ef">$(</span>APP_NAME<span style="color:#66d9ef">)</span>;
   @rm -rf tmp
 
-dist: $(PACKAGE)
-</code></pre>
-
-<p>This gives us a small list of important commands:</p>
-
+<span style="color:#a6e22e">dist</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">$(</span>PACKAGE<span style="color:#66d9ef">)</span>
+</code></pre></div><p>This gives us a small list of important commands:</p>
 <ul>
 <li><code>make</code> will build all of the targets defined in EXECUTABLES</li>
 <li><code>make test</code> will run go test or whatever you set TEST to</li>
 <li><code>make clean</code> will remove dirs <code>bin</code>, <code>_vendor</code>, and <code>dist</code></li>
 <li><code>make dist</code> will package your app into a tarball in the <code>dist</code> dir.</li>
 </ul>
-
 <p>You may have also noticed a few things pertaining to versioning these
 are some cool tricks to make versioning awesome and easy when releasing
 your app into the wild.</p>
-
 <p>The first is the <code>VERSION</code> variable, it is composed of two parts the
 <a href="http://semver.org/">semver</a>, a tag (<code>beta</code>, <code>rc</code>, etc) or the branch name.
 The second part is the <code>BUILD</code> variable, it is composed of two parts the
 commit sha, and the branch it was built from.</p>
-
 <p>This all comes together in the <code>LDFLAGS</code> variable which will set two
 corresponding variables in the <code>main</code> package of your code which you
 could then use to populate a cli message among other things. The power of
 this is that we can keep our versioning in one place and it will affect
 all other parts of our project. You will see more of this in the next part.</p>
-
-<h2 id="the-wercker-yml">The wercker.yml</h2>
-
+<h2 id="the-werckeryml">The wercker.yml</h2>
 <p>For those who do not know what <a href="http://wercker.com/">wercker</a> is, I urge you
 to check it out, it&rsquo;s currently my favorite CI/CD tool and it&rsquo;s free while they
 are in beta. I use wercker as my platform for testing my code and more
@@ -250,53 +232,49 @@ importantly building/releasing my code. In order to use wercker you must first
 setup your repo in wercker, then you must add a <code>wercker.yml</code> file to your repo.
 Wercker gives us two flows, a Build Flow and a Deploy Flow and they do exactly
 that.</p>
-
 <p>My wercker configuration takes advantage of a lot of werckers features namely
 the Custom deploy targets and Pipeline variables. this allows me to create deploy
 targets for both <em>final</em> releases and <em>release candidates</em>. My &ldquo;deployments&rdquo;
 are in the form of <a href="https://github.com/blog/1547-release-your-software">Github Releases</a>
 and recieve a tag of the version, and the packaged binaries.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">box</span>: wercker/golang@<span style="color:#ae81ff">1.2.3</span>
 
-<pre><code class="language-yaml">box: wercker/golang@1.2.3
-
-deploy:
-    steps:
-        # Sets the go workspace and places your package
-        # at the right place in the workspace tree
+<span style="color:#66d9ef">deploy</span>:
+    <span style="color:#66d9ef">steps</span>:
+        <span style="color:#75715e"># Sets the go workspace and places your package</span>
+        <span style="color:#75715e"># at the right place in the workspace tree</span>
         - setup-go-workspace
-        - script: 
-            name: Build App
-            code: make dist
-        - script:
-            name: Make Exports
-            code: | 
-                export APP_VERSION=$(make version)
+        - <span style="color:#66d9ef">script</span>: 
+            <span style="color:#66d9ef">name</span>: Build App
+            <span style="color:#66d9ef">code</span>: make dist
+        - <span style="color:#66d9ef">script</span>:
+            <span style="color:#66d9ef">name</span>: Make Exports
+            <span style="color:#66d9ef">code</span>: <span style="color:#e6db74">| 
+</span><span style="color:#e6db74">                export APP_VERSION=$(make version)</span>
                 export PACKAGE_PATH=$(make package)
-        - github-create-release:
-            token: $GITHUB_TOKEN
-            tag: v$APP_VERSION
-            prerelease: $PRE_RELEASE
-            title: Version $APP_VERSION
-        - github-upload-asset:
-            token: $GITHUB_TOKEN
-            file: $PACKAGE_PATH
-            release_id: $WERCKER_GITHUB_CREATE_RELEASE_ID
+        - <span style="color:#66d9ef">github-create-release</span>:
+            <span style="color:#66d9ef">token</span>: $GITHUB_TOKEN
+            <span style="color:#66d9ef">tag</span>: v$APP_VERSION
+            <span style="color:#66d9ef">prerelease</span>: $PRE_RELEASE
+            <span style="color:#66d9ef">title</span>: Version $APP_VERSION
+        - <span style="color:#66d9ef">github-upload-asset</span>:
+            <span style="color:#66d9ef">token</span>: $GITHUB_TOKEN
+            <span style="color:#66d9ef">file</span>: $PACKAGE_PATH
+            <span style="color:#66d9ef">release_id</span>: $WERCKER_GITHUB_CREATE_RELEASE_ID
 
-# Build definition
-build:
-  # The steps that will be executed on build
-  steps:
-    # Sets the go workspace and places your package
-    # at the right place in the workspace tree
+<span style="color:#75715e"># Build definition</span>
+<span style="color:#66d9ef">build</span>:
+  <span style="color:#75715e"># The steps that will be executed on build</span>
+  <span style="color:#66d9ef">steps</span>:
+    <span style="color:#75715e"># Sets the go workspace and places your package</span>
+    <span style="color:#75715e"># at the right place in the workspace tree</span>
     - setup-go-workspace
-    - script:
-        name: Unit Test
-        code: |
-            make test
+    - <span style="color:#66d9ef">script</span>:
+        <span style="color:#66d9ef">name</span>: Unit Test
+        <span style="color:#66d9ef">code</span>: <span style="color:#e6db74">|
+</span><span style="color:#e6db74">            make test</span>
 
-</code></pre>
-
-<p>This file will instruct wercker to first run tests on your project and then
+</code></pre></div><p>This file will instruct wercker to first run tests on your project and then
 once completed you may run a &ldquo;deploy&rdquo; on your test that will package up your
 app and then ship the tarball off to github release with git tags on the
 given commit. There are however a few steps needed to make this work, you
@@ -308,17 +286,13 @@ an <code>APP_SUFFIX</code> which will contain the identifier for this release (e
 and a <code>PRE_RELEASE</code> variable which can be <code>true</code> or <code>false</code> and will flag the
 release in github as a pre-release, and thats it you should be able to fire off
 a build and release it directly to your repos github releases.</p>
-
 <h2 id="final-thoughts">Final Thoughts</h2>
-
 <p>With the given <code>Makefile</code>, <code>wercker.yml</code>, and filesystem structure I have been
 able to quickly and easily bootstrap applications with CI/CD as well as a
 nice way to manage dependencies that works everywhere. I hope this is a useful
 resource and I will continue to update this process with new additions as I
 find them.</p>
-
 <h2 id="links">Links</h2>
-
 <ul>
 <li><a href="http://wercker.com">Wercker</a></li>
 <li><a href="https://github.com/ChrisMcKenzie/Deploy-With-Golang-Demo">Demo Project</a></li>
@@ -342,7 +316,7 @@ find them.</p>
 </div>
 
       <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     

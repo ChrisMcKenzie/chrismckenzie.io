@@ -36,8 +36,6 @@
             
           
             
-          
-            
             <li><a class="sidebar-nav-item" href="https://chrismckenzie.io/posts/" title="Posts">Posts</a></li>
             
           
@@ -45,6 +43,8 @@
           
             
             <li><a class="sidebar-nav-item" href="https://chrismckenzie.io/projects/" title="Projects">Projects</a></li>
+            
+          
             
           
             
@@ -77,44 +77,33 @@
         </div>
       </div>
       <div class="content">
-        
-
-<p>So it has been a while since I last touched on the problem of deploying software
+        <p>So it has been a while since I last touched on the problem of deploying software
 to a server, with that being said I have had a chance to really dig in and
 find a solution that is flexible as well as simple for developers to setup.</p>
-
 <h2 id="the-idea">The Idea</h2>
-
 <p>So when I started down this path of finding a clean deployment flow for my
 company (<a href="http://thecontrolgroup.com">The Control Group</a>) I had a few requirements It had to work for all of
 the different types of applications and languages that we build; I also did not
 want to use web hooks they are just too clunky and you have to have a server that
 is accesible on the internet so it can be called (not really a fan); The last thing
 that I wanted to be able to do is to deploy multiple versions of an application.</p>
-
 <h2 id="artifacts">Artifacts</h2>
-
 <p>Another part of this system is the need for storing build artifacts in our case
 tarballs containing all of the files need to run the system. for this I chose
 rackspace <a href="http://www.rackspace.com/cloud/files">Cloud Files</a>, but Amazons <a href="https://aws.amazon.com/s3/">S3</a> would work just as well. it simply needs
 to store our build artifacts for later downloading on to our server.</p>
-
 <h2 id="i-built-a-tool">I built a tool!!!</h2>
-
 <p>So now for the shameless plug! At first I implemented this system with a pretty
 unwieldy bash script, and quickly realized if anyone else is going to use this
 it needs to be simple to setup. With that I introduce <a href="https://github.com/chrismckenzie/dropship">Dropship</a>! Dropship is
 a tool that is installed on your servers along with a simple configuration file
 telling it where to get your artifact and how to install it as well being able
 to sequentially update multiple servers.</p>
-
 <p>Dropship uses md5sums to check freshness of your artifact comparing the one that
 is installed with the sum of file on the artifact repo, it will then repeat this
 process on the configured interval and if the sums do not match it will then start
 the update process (pretty simple eh).</p>
-
 <p>A <a href="https://github.com/chrismckenzie/dropship">Dropship</a> config is and HCL file like the following:</p>
-
 <pre><code># vim: set ft=hcl :
 service &quot;my-service&quot; {
   # Use a semaphore to update one machine at a time
@@ -154,20 +143,15 @@ service &quot;my-service&quot; {
     command = &quot;initctl my-service start&quot;
   }
 }
-</code></pre>
-
-<p>As you can see there are a bunch of options available for installing your system,
+</code></pre><p>As you can see there are a bunch of options available for installing your system,
 you can set hooks that will be called <code>before</code> and <code>after</code> your artifact is installed.</p>
-
 <p>Hooks are a very interesting feature and I have implemented a few helpful hooks
 to start with but hope to add many more. One hook worth mentioning is the
 <code>graphite-event</code> hook this will create an event in graphite which can be viewed as
 a pretty annotation on your graphs in grafana for example, you can then see how
 your latest deployment affected your stats.</p>
-
 <p>Currently this is available as a Debian package and can be installed by following
 the guide <a href="https://github.com/ChrisMcKenzie/dropship#installation">here</a>.</p>
-
 <p>Please let me know what you think of this project in the comments. And feel free
 to file issues and feature requests <a href="https://github.com/ChrisMcKenzie/dropship/issues">here</a></p>
 
@@ -189,7 +173,7 @@ to file issues and feature requests <a href="https://github.com/ChrisMcKenzie/dr
 </div>
 
       <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     

@@ -1,9 +1,34 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://chrismckenzie.io/</loc>
+    <lastmod>2020-03-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/posts/</loc>
+    <lastmod>2020-03-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/posts/working-remotely/</loc>
+    <lastmod>2020-03-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/projects/k5/</loc>
+    <lastmod>2020-02-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chrismckenzie.io/projects/k5/posts/a-little-tuneup/</loc>
+    <lastmod>2020-02-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/projects/</loc>
     <lastmod>2020-02-26T00:00:00+00:00</lastmod>
   </url>
   
@@ -13,7 +38,42 @@
   </url>
   
   <url>
+    <loc>https://chrismckenzie.io/tags/deployment/</loc>
+    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/tags/dropship/</loc>
+    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/tags/golang/</loc>
+    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/tags/</loc>
+    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chrismckenzie.io/recipes/breakfast_burrito/</loc>
+    <lastmod>2015-07-24T23:16:34-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/categories/</loc>
+    <lastmod>2015-07-24T23:16:34-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/categories/food/</loc>
+    <lastmod>2015-07-24T23:16:34-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/recipes/</loc>
     <lastmod>2015-07-24T23:16:34-07:00</lastmod>
   </url>
   
@@ -28,8 +88,18 @@
   </url>
   
   <url>
-    <loc>https://chrismckenzie.io/projects/k5/</loc>
-    <lastmod>2020-02-26T00:00:00+00:00</lastmod>
+    <loc>https://chrismckenzie.io/tags/development/</loc>
+    <lastmod>2015-02-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/tags/makefile/</loc>
+    <lastmod>2015-02-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chrismckenzie.io/tags/wercker/</loc>
+    <lastmod>2015-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -45,37 +115,7 @@
   </url>
   
   <url>
-    <loc>https://chrismckenzie.io/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/</loc>
-    <lastmod>2020-02-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://chrismckenzie.io/colleagues/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/tags/deployment/</loc>
-    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/tags/development/</loc>
-    <lastmod>2015-02-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/tags/dropship/</loc>
-    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -83,30 +123,7 @@
   </url>
   
   <url>
-    <loc>https://chrismckenzie.io/categories/food/</loc>
-    <lastmod>2015-07-24T23:16:34-07:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/tags/golang/</loc>
-    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://chrismckenzie.io/colleagues/joel/</loc>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/tags/makefile/</loc>
-    <lastmod>2015-02-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/posts/</loc>
-    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -114,29 +131,7 @@
   </url>
   
   <url>
-    <loc>https://chrismckenzie.io/projects/</loc>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/recipes/</loc>
-    <lastmod>2015-07-24T23:16:34-07:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/tags/</loc>
-    <lastmod>2015-11-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://chrismckenzie.io/colleagues/varun/</loc>
-  </url>
-  
-  <url>
-    <loc>https://chrismckenzie.io/tags/wercker/</loc>
-    <lastmod>2015-02-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>
